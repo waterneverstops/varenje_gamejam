@@ -29,6 +29,9 @@ public sealed class FirstPersonController : MonoBehaviour, GameInputs.IPlayerAct
     [SerializeField] private float crouchSpeedMultiplier = 0.45f;
     [SerializeField] private float maxVelocityChange = 12f;
     [SerializeField] private float airControlMultiplier = 0.35f;
+    [SerializeField] private bool slideAlongWalls = true;
+    [SerializeField, Range(0f, 89f)] private float minWallSlideAngle = 35f;
+    [SerializeField, Range(0f, 1f)] private float wallSlideStrength = 0.35f;
 
     [Header("Sprint")]
     [SerializeField] private bool canSprint = true;
@@ -41,6 +44,9 @@ public sealed class FirstPersonController : MonoBehaviour, GameInputs.IPlayerAct
     [Header("Jump")]
     [SerializeField] private bool canJump = true;
     [SerializeField] private float jumpImpulse = 5f;
+    [SerializeField] private float jumpBufferTime = 0.12f;
+    [SerializeField] private float coyoteTime = 0.08f;
+    [SerializeField] private float groundCheckLockAfterJump = 0.08f;
 
     [Header("Crouch")]
     [SerializeField] private bool canCrouch = true;
@@ -50,6 +56,9 @@ public sealed class FirstPersonController : MonoBehaviour, GameInputs.IPlayerAct
     [Header("Ground Check")]
     [SerializeField] private LayerMask groundMask = ~0;
     [SerializeField] private float groundCheckDistance = 0.12f;
+    [SerializeField] private float groundProbeRadius = 0.18f;
+    [SerializeField, Range(0f, 1f)] private float minGroundNormalY = 0.65f;
+    [SerializeField] private float groundContactGraceTime = 0.08f;
 
     [Header("Head Bob")]
     [SerializeField] private bool useHeadBob = true;
@@ -67,6 +76,11 @@ public sealed class FirstPersonController : MonoBehaviour, GameInputs.IPlayerAct
     private float sprintCooldownTimer;
     private float pitch;
     private float headBobTimer;
+    private float lastGroundedTime = -999f;
+    private float jumpPressedTime = -1f;
+    private float groundCheckLockTimer;
+    private readonly Vector3[] wallNormals = new Vector3[8];
+    private int wallNormalCount;
     private bool grounded;
     private bool sprintHeld;
     private bool sprinting;
@@ -151,6 +165,9 @@ public sealed class FirstPersonController : MonoBehaviour, GameInputs.IPlayerAct
         zoomHeld = false;
         zoomed = false;
         jumpRequested = false;
+        jumpPressedTime = -1f;
+        groundCheckLockTimer = 0f;
+        wallNormalCount = 0;
 
         if (lockCursor)
         {
@@ -161,10 +178,9 @@ public sealed class FirstPersonController : MonoBehaviour, GameInputs.IPlayerAct
 
     private void Update()
     {
-        grounded = CheckGrounded();
+        TickGrounded(Time.deltaTime);
 
         ReadLook();
-        ReadJump();
         TickSprint(Time.deltaTime);
         TickCameraFov(Time.deltaTime);
         TickHeadBob(Time.deltaTime);
@@ -172,6 +188,8 @@ public sealed class FirstPersonController : MonoBehaviour, GameInputs.IPlayerAct
 
     private void FixedUpdate()
     {
+        ReadJump();
+
         if (!canMove)
         {
             sprinting = false;
@@ -180,6 +198,8 @@ public sealed class FirstPersonController : MonoBehaviour, GameInputs.IPlayerAct
 
         Vector3 localDirection = Vector3.ClampMagnitude(new Vector3(moveInput.x, 0f, moveInput.y), 1f);
         Vector3 worldDirection = transform.TransformDirection(localDirection);
+        worldDirection = ProjectMovementAlongWalls(worldDirection);
+
         float speed = GetCurrentSpeed(moveInput);
         Vector3 targetVelocity = worldDirection * speed;
         Vector3 currentVelocity = body.linearVelocity;
@@ -191,6 +211,32 @@ public sealed class FirstPersonController : MonoBehaviour, GameInputs.IPlayerAct
         velocityChange.y = 0f;
 
         body.AddForce(velocityChange, ForceMode.VelocityChange);
+        wallNormalCount = 0;
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if (!IsInGroundMask(collision.collider.gameObject.layer))
+        {
+            return;
+        }
+
+        for (int i = 0; i < collision.contactCount; i++)
+        {
+            Vector3 normal = collision.GetContact(i).normal;
+            if (normal.y >= minGroundNormalY)
+            {
+                if (groundCheckLockTimer <= 0f)
+                {
+                    grounded = true;
+                    lastGroundedTime = Time.time;
+                }
+
+                continue;
+            }
+
+            RegisterWallNormal(normal);
+        }
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -206,9 +252,10 @@ public sealed class FirstPersonController : MonoBehaviour, GameInputs.IPlayerAct
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.started)
         {
             jumpRequested = true;
+            jumpPressedTime = Time.time;
         }
     }
 
@@ -302,20 +349,35 @@ public sealed class FirstPersonController : MonoBehaviour, GameInputs.IPlayerAct
             return;
         }
 
-        jumpRequested = false;
+        if (Time.time - jumpPressedTime > jumpBufferTime)
+        {
+            jumpRequested = false;
+            return;
+        }
 
-        if (!canJump || !grounded)
+        bool canUseGround = grounded || Time.time - lastGroundedTime <= coyoteTime;
+        if (!canJump || !canUseGround)
         {
             return;
         }
+
+        jumpRequested = false;
+        jumpPressedTime = -1f;
 
         if (crouched && !holdCrouch)
         {
             SetCrouched(false);
         }
 
+        Vector3 velocity = body.linearVelocity;
+        if (velocity.y < 0f)
+        {
+            body.linearVelocity = new Vector3(velocity.x, 0f, velocity.z);
+        }
+
         body.AddForce(Vector3.up * jumpImpulse, ForceMode.Impulse);
         grounded = false;
+        groundCheckLockTimer = groundCheckLockAfterJump;
     }
 
     private void SetCrouched(bool value)
@@ -377,6 +439,80 @@ public sealed class FirstPersonController : MonoBehaviour, GameInputs.IPlayerAct
         return crouched ? walkSpeed * crouchSpeedMultiplier : walkSpeed;
     }
 
+    private Vector3 ProjectMovementAlongWalls(Vector3 direction)
+    {
+        if (!slideAlongWalls || direction.sqrMagnitude <= Mathf.Epsilon)
+        {
+            return direction;
+        }
+
+        float inputMagnitude = Mathf.Clamp01(direction.magnitude);
+        float minSlideDot = Mathf.Cos(minWallSlideAngle * Mathf.Deg2Rad);
+
+        for (int i = 0; i < wallNormalCount; i++)
+        {
+            Vector3 normal = wallNormals[i];
+            Vector3 moveDirection = direction.normalized;
+            float signedIntoWall = Vector3.Dot(moveDirection, normal);
+            if (signedIntoWall < 0f)
+            {
+                normal = -normal;
+                signedIntoWall = -signedIntoWall;
+            }
+
+            if (signedIntoWall <= 0f)
+            {
+                continue;
+            }
+
+            Vector3 slideDirection = Vector3.ProjectOnPlane(direction, normal);
+            if (signedIntoWall >= minSlideDot)
+            {
+                direction = Vector3.zero;
+                continue;
+            }
+
+            float slideFactor = Mathf.InverseLerp(minSlideDot, 0f, signedIntoWall);
+            float slideScale = Mathf.Lerp(0f, wallSlideStrength, slideFactor);
+            direction = slideDirection * slideScale;
+        }
+
+        if (direction.sqrMagnitude <= Mathf.Epsilon)
+        {
+            return Vector3.zero;
+        }
+
+        return Vector3.ClampMagnitude(direction.normalized * inputMagnitude, 1f);
+    }
+
+    private void RegisterWallNormal(Vector3 normal)
+    {
+        normal.y = 0f;
+
+        if (normal.sqrMagnitude <= Mathf.Epsilon)
+        {
+            return;
+        }
+
+        normal.Normalize();
+
+        for (int i = 0; i < wallNormalCount; i++)
+        {
+            if (Vector3.Dot(wallNormals[i], normal) > 0.95f)
+            {
+                return;
+            }
+        }
+
+        if (wallNormalCount >= wallNormals.Length)
+        {
+            return;
+        }
+
+        wallNormals[wallNormalCount] = normal;
+        wallNormalCount++;
+    }
+
     private void TickCameraFov(float deltaTime)
     {
         if (playerCamera == null)
@@ -400,18 +536,74 @@ public sealed class FirstPersonController : MonoBehaviour, GameInputs.IPlayerAct
 
     private bool CheckGrounded()
     {
-        Vector3 origin = transform.position + Vector3.up * 0.05f;
-        float radius = 0.25f;
-        float distance = groundCheckDistance + 0.05f;
+        Vector3 center = transform.position;
+        float radius = groundProbeRadius;
+        float distance = groundCheckDistance + 0.08f;
 
         if (capsule != null)
         {
-            radius = Mathf.Max(0.02f, capsule.radius * Mathf.Max(transform.localScale.x, transform.localScale.z) * 0.9f);
-            origin = transform.TransformPoint(capsule.center);
-            origin.y -= (capsule.height * transform.localScale.y * 0.5f) - radius;
+            center = transform.TransformPoint(capsule.center);
+            float height = capsule.height * Mathf.Abs(transform.localScale.y);
+            float bottom = center.y - height * 0.5f;
+            center.y = bottom + 0.08f;
+            radius = Mathf.Min(radius, capsule.radius * Mathf.Max(transform.localScale.x, transform.localScale.z) * 0.7f);
         }
 
-        return Physics.SphereCast(origin, radius, Vector3.down, out _, distance, groundMask, QueryTriggerInteraction.Ignore);
+        radius = Mathf.Max(0f, radius);
+
+        if (HasGroundBelow(center, distance))
+        {
+            return true;
+        }
+
+        Vector3 right = transform.right * radius;
+        Vector3 forward = transform.forward * radius;
+
+        return HasGroundBelow(center + right, distance)
+               || HasGroundBelow(center - right, distance)
+               || HasGroundBelow(center + forward, distance)
+               || HasGroundBelow(center - forward, distance);
+    }
+
+    private void TickGrounded(float deltaTime)
+    {
+        groundCheckLockTimer = Mathf.Max(0f, groundCheckLockTimer - deltaTime);
+        bool hasGroundBelow = CheckGrounded();
+        bool hasRecentGroundContact = Time.time - lastGroundedTime <= groundContactGraceTime;
+        grounded = groundCheckLockTimer <= 0f && (hasGroundBelow || hasRecentGroundContact);
+
+        if (groundCheckLockTimer <= 0f && hasGroundBelow)
+        {
+            lastGroundedTime = Time.time;
+        }
+    }
+
+    private bool HasGroundBelow(Vector3 origin, float distance)
+    {
+        RaycastHit[] hits = Physics.RaycastAll(origin, Vector3.down, distance, groundMask, QueryTriggerInteraction.Ignore);
+
+        for (int i = 0; i < hits.Length; i++)
+        {
+            RaycastHit hit = hits[i];
+            if (hit.collider == null || IsOwnCollider(hit.collider) || hit.normal.y < minGroundNormalY)
+            {
+                continue;
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private bool IsOwnCollider(Collider hitCollider)
+    {
+        return hitCollider.transform == transform || hitCollider.transform.IsChildOf(transform);
+    }
+
+    private bool IsInGroundMask(int layer)
+    {
+        return (groundMask.value & (1 << layer)) != 0;
     }
 
     private void TickHeadBob(float deltaTime)
@@ -446,6 +638,14 @@ public sealed class FirstPersonController : MonoBehaviour, GameInputs.IPlayerAct
         sprintDuration = Mathf.Max(0.1f, sprintDuration);
         sprintRecoverySpeed = Mathf.Max(0.01f, sprintRecoverySpeed);
         sprintCooldown = Mathf.Max(0f, sprintCooldown);
+        jumpBufferTime = Mathf.Max(0f, jumpBufferTime);
+        coyoteTime = Mathf.Max(0f, coyoteTime);
+        groundCheckLockAfterJump = Mathf.Max(0f, groundCheckLockAfterJump);
+        groundCheckDistance = Mathf.Max(0.01f, groundCheckDistance);
+        groundProbeRadius = Mathf.Max(0f, groundProbeRadius);
+        groundContactGraceTime = Mathf.Max(0f, groundContactGraceTime);
+        minWallSlideAngle = Mathf.Clamp(minWallSlideAngle, 0f, 89f);
+        wallSlideStrength = Mathf.Clamp01(wallSlideStrength);
         walkSpeed = Mathf.Max(0f, walkSpeed);
         sprintSpeed = Mathf.Max(walkSpeed, sprintSpeed);
         crouchSpeedMultiplier = Mathf.Clamp01(crouchSpeedMultiplier);
