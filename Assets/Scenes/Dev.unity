@@ -206,21 +206,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::QuantumObjectManager
   observerCamera: {fileID: 9212904126004942979}
-  checkInterval: 0.12
+  checkInterval: 0.01
   viewportMargin: 0.02
   requireLineOfSight: 1
   viewOcclusionMask:
     serializedVersion: 2
-    m_Bits: 4294967295
-  requireLight: 1
-  lightThreshold: 0.05
-  includeAmbientLight: 0
-  lightOcclusionMask:
+    m_Bits: 375
+  darknessLightLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
-  directionalLightCheckDistance: 100
+    m_Bits: 256
+  trackedDarknessLights: []
   blockJumpsWhenInCameraFrame: 1
-  allowVisibleDarknessJumps: 0
+  allowVisibleDarknessJumps: 1
 --- !u!4 &26955700
 Transform:
   m_ObjectHideFlags: 0
@@ -2240,10 +2237,6 @@ PrefabInstance:
     - target: {fileID: 6998550588068157674, guid: 05db4ded0e9e23346b4723af48b21980, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 7003167403517216032, guid: 05db4ded0e9e23346b4723af48b21980, type: 3}
-      propertyPath: minWallSlideAngle
-      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

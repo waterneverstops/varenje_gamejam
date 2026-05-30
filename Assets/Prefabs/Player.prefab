@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 996557994407022769}
   - component: {fileID: 5825489957656999999}
   - component: {fileID: 4812511089135493968}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PlayerCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -173,7 +173,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5101405735826939009}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Joint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -208,7 +208,7 @@ GameObject:
   - component: {fileID: 6342548124056526734}
   - component: {fileID: 3028555640928663761}
   - component: {fileID: 5365726882735246084}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -350,7 +350,7 @@ GameObject:
   - component: {fileID: 4085170251409121095}
   - component: {fileID: 6158227739363502507}
   - component: {fileID: 7003167403517216032}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 8418204508859773708, guid: 0000000000000000d000000000000000, type: 0}
@@ -457,7 +457,7 @@ MonoBehaviour:
   maxVelocityChange: 12
   airControlMultiplier: 0.35
   slideAlongWalls: 1
-  minWallSlideAngle: 35
+  minWallSlideAngle: 10
   wallSlideStrength: 0.35
   canSprint: 1
   unlimitedSprint: 0

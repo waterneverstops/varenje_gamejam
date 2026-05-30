@@ -10,12 +10,9 @@ public sealed class QuantumObjectManager : MonoBehaviour
     [SerializeField] private bool requireLineOfSight = true;
     [SerializeField] private LayerMask viewOcclusionMask = ~0;
 
-    [Header("Light")]
-    [SerializeField] private bool requireLight = true;
-    [SerializeField, Min(0f)] private float lightThreshold = 0.05f;
-    [SerializeField] private bool includeAmbientLight;
-    [SerializeField] private LayerMask lightOcclusionMask = ~0;
-    [SerializeField, Min(1f)] private float directionalLightCheckDistance = 100f;
+    [Header("Darkness")]
+    [SerializeField] private LayerMask darknessLightLayers = ~0;
+    [SerializeField] private Light[] trackedDarknessLights = new Light[0];
 
     [Header("Safety")]
     [SerializeField] private bool blockJumpsWhenInCameraFrame = true;
@@ -25,7 +22,7 @@ public sealed class QuantumObjectManager : MonoBehaviour
 
     private readonly Dictionary<string, QuantumGroup> groups = new Dictionary<string, QuantumGroup>();
     private readonly List<Vector3> pointBuffer = new List<Vector3>(32);
-    private readonly List<Light> lightBuffer = new List<Light>(32);
+    private readonly List<Light> trackedLightBuffer = new List<Light>(32);
     private readonly List<int> candidateBuffer = new List<int>(16);
     private readonly Plane[] frustumPlanes = new Plane[6];
     private float nextCheckTime;
@@ -157,7 +154,7 @@ public sealed class QuantumObjectManager : MonoBehaviour
         }
 
         EnsureObserverCamera();
-        RefreshLights();
+        RefreshTrackedLights();
         NormalizeGroup(group);
         return TryMoveGroup(group);
     }
@@ -165,7 +162,7 @@ public sealed class QuantumObjectManager : MonoBehaviour
     private void TickQuantumGroups()
     {
         EnsureObserverCamera();
-        RefreshLights();
+        RefreshTrackedLights();
 
         foreach (QuantumGroup group in groups.Values)
         {
@@ -231,36 +228,31 @@ public sealed class QuantumObjectManager : MonoBehaviour
         pointBuffer.Clear();
         quantumObject.GetObservationPoints(pointBuffer);
 
-        if (blockJumpsWhenInCameraFrame && IsObjectBoundsInCameraFrame(quantumObject))
+        if (blockJumpsWhenInCameraFrame && !IsObjectBoundsInCameraFrame(quantumObject))
         {
-            return false;
+            return true;
         }
+
+        bool hasVisiblePoint = false;
 
         for (int i = 0; i < pointBuffer.Count; i++)
         {
             Vector3 point = pointBuffer[i];
-            if (blockJumpsWhenInCameraFrame && IsPointInCameraFrame(point))
-            {
-                return false;
-            }
-
             if (!IsPointVisible(point, quantumObject))
             {
                 continue;
             }
 
-            if (!requireLight || IsPointLit(point, quantumObject))
-            {
-                return false;
-            }
-
-            if (!allowVisibleDarkness)
-            {
-                return false;
-            }
+            hasVisiblePoint = true;
+            break;
         }
 
-        return true;
+        if (!hasVisiblePoint)
+        {
+            return true;
+        }
+
+        return allowVisibleDarkness && AreAllTrackedLightsOff();
     }
 
     private bool IsObjectBoundsInCameraFrame(QuantumObject quantumObject)
@@ -324,79 +316,18 @@ public sealed class QuantumObjectManager : MonoBehaviour
         return true;
     }
 
-    private bool IsPointLit(Vector3 point, QuantumObject owner)
+    private bool AreAllTrackedLightsOff()
     {
-        if (includeAmbientLight)
+        for (int i = 0; i < trackedDarknessLights.Length; i++)
         {
-            float ambient = RenderSettings.ambientLight.maxColorComponent * RenderSettings.ambientIntensity;
-            if (ambient >= lightThreshold)
+            Light lightComponent = trackedDarknessLights[i];
+            if (lightComponent != null && lightComponent.enabled && lightComponent.gameObject.activeInHierarchy)
             {
-                return true;
+                return false;
             }
         }
 
-        for (int i = 0; i < lightBuffer.Count; i++)
-        {
-            Light lightComponent = lightBuffer[i];
-            if (lightComponent == null || !lightComponent.enabled || lightComponent.intensity <= 0f)
-            {
-                continue;
-            }
-
-            float contribution = GetLightContribution(lightComponent, point, owner);
-            if (contribution >= lightThreshold)
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private float GetLightContribution(Light lightComponent, Vector3 point, QuantumObject owner)
-    {
-        float colorPower = lightComponent.color.maxColorComponent;
-
-        if (lightComponent.type == LightType.Directional)
-        {
-            Vector3 directionToLight = -lightComponent.transform.forward;
-            if (HasBlockingHit(point, directionToLight, directionalLightCheckDistance, lightOcclusionMask, owner))
-            {
-                return 0f;
-            }
-
-            return lightComponent.intensity * colorPower;
-        }
-
-        Vector3 toPoint = point - lightComponent.transform.position;
-        float distance = toPoint.magnitude;
-        if (distance <= 0.01f)
-        {
-            return lightComponent.intensity * colorPower;
-        }
-
-        if (distance > lightComponent.range)
-        {
-            return 0f;
-        }
-
-        if (lightComponent.type == LightType.Spot)
-        {
-            float angle = Vector3.Angle(lightComponent.transform.forward, toPoint / distance);
-            if (angle > lightComponent.spotAngle * 0.5f)
-            {
-                return 0f;
-            }
-        }
-
-        Vector3 pointLightDirection = -toPoint / distance;
-        if (HasBlockingHit(point, pointLightDirection, distance, lightOcclusionMask, owner))
-        {
-            return 0f;
-        }
-
-        float attenuation = 1f - Mathf.Clamp01(distance / Mathf.Max(0.01f, lightComponent.range));
-        return lightComponent.intensity * colorPower * attenuation * attenuation;
+        return true;
     }
 
     private bool HasBlockingHit(Vector3 origin, Vector3 direction, float distance, LayerMask mask, QuantumObject owner)
@@ -416,23 +347,26 @@ public sealed class QuantumObjectManager : MonoBehaviour
         return false;
     }
 
-    private void RefreshLights()
+    private void RefreshTrackedLights()
     {
-        lightBuffer.Clear();
+        trackedLightBuffer.Clear();
 
-        if (!requireLight)
-        {
-            return;
-        }
-
-        Light[] lights = FindObjectsByType<Light>(FindObjectsInactive.Exclude);
+        Light[] lights = FindObjectsByType<Light>(FindObjectsInactive.Include);
         for (int i = 0; i < lights.Length; i++)
         {
-            if (lights[i] != null && lights[i].enabled && lights[i].gameObject.activeInHierarchy)
+            Light lightComponent = lights[i];
+            if (lightComponent != null && IsInDarknessLightLayer(lightComponent.gameObject.layer))
             {
-                lightBuffer.Add(lights[i]);
+                trackedLightBuffer.Add(lightComponent);
             }
         }
+
+        trackedDarknessLights = trackedLightBuffer.ToArray();
+    }
+
+    private bool IsInDarknessLightLayer(int layer)
+    {
+        return (darknessLightLayers.value & (1 << layer)) != 0;
     }
 
     private void EnsureObserverCamera()
