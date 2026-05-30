@@ -128,6 +128,10 @@ public sealed class PlayerGrabbing : MonoBehaviour, GameInputs.IPlayerActions
         }
     }
 
+    public void OnLight(InputAction.CallbackContext context)
+    {
+    }
+
     public void OnMove(InputAction.CallbackContext context)
     {
     }

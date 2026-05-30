@@ -307,6 +307,10 @@ public sealed class FirstPersonController : MonoBehaviour, GameInputs.IPlayerAct
         }
     }
 
+    public void OnLight(InputAction.CallbackContext context)
+    {
+    }
+
     public void OnAttack(InputAction.CallbackContext context)
     {
     }
