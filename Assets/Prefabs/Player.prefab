@@ -338,6 +338,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerLight
   targetLight: {fileID: 6342548124056526734}
   startEnabled: 1
+  maxCharges: 20
+  fullChargeColor: {r: 1, g: 1, b: 1, a: 1}
+  emptyChargeColor: {r: 1, g: 0.45, b: 0, a: 1}
+  minStartupDelay: 0.05
+  maxStartupDelay: 0.8
+  startupFlickerIntervalMin: 0.03
+  startupFlickerIntervalMax: 0.12
+  flickerIntensityVariance: 0.12
+  flickerIntervalMin: 0.04
+  flickerIntervalMax: 0.12
 --- !u!1 &6998550588068157674
 GameObject:
   m_ObjectHideFlags: 0
