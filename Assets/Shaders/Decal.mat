@@ -112,9 +112,9 @@ Material:
     - _Cull: 2
     - _Cutoff: 0.5
     - _DarkBrightness: 1.5
-    - _DarkSoftness: 0.2
+    - _DarkSoftness: 0.001
     - _DarkStrength: 1
-    - _DarkThreshold: 0.15
+    - _DarkThreshold: 0
     - _DecalMeshBiasType: 0
     - _DecalMeshDepthBias: 0
     - _DecalMeshViewBias: 0
