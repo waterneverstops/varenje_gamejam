@@ -27,7 +27,8 @@ MonoBehaviour:
   m_RendererFeatures:
   - {fileID: 7833122117494664109}
   - {fileID: 4649793481897840250}
-  m_RendererFeatureMap: ad6b866f10d7b46c7a8e723f89628740
+  - {fileID: 1657070916593931091}
+  m_RendererFeatureMap: ad6b866f10d7b46c7a8e723f89628740535336173819ff16
   m_UseNativeRenderPass: 1
   xrSystemData: {fileID: 0}
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
@@ -56,6 +57,30 @@ MonoBehaviour:
   m_DepthTextureFormat: 0
   m_AccurateGbufferNormals: 0
   m_IntermediateTextureMode: 0
+--- !u!114 &1657070916593931091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c62aa7ff7c34f948af3d42daed02b0b, type: 3}
+  m_Name: FakeMirrorStencilWriteFeature
+  m_EditorClassIdentifier: Assembly-CSharp::FakeMirrorStencilWriteFeature
+  m_Active: 1
+  settings:
+    passTag: Fake Mirror Layer Render
+    renderPassEvent: 500
+    renderQueueType: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 512
+    stencilRef: 64
+    depthTest: 4
+    depthWrite: 1
+    clearDepthInsideStencil: 1
 --- !u!114 &4649793481897840250
 MonoBehaviour:
   m_ObjectHideFlags: 0
