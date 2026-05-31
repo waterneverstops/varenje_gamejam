@@ -7,16 +7,10 @@ public sealed class QuantumObjectManager : MonoBehaviour
     [SerializeField] private Camera observerCamera;
     [SerializeField, Min(0f)] private float checkInterval = 0.12f;
     [SerializeField, Range(0f, 0.25f)] private float viewportMargin = 0.02f;
-    [SerializeField] private bool requireLineOfSight = true;
-    [SerializeField] private LayerMask viewOcclusionMask = ~0;
 
     [Header("Darkness")]
     [SerializeField] private LayerMask darknessLightLayers = ~0;
     [SerializeField] private Light[] trackedDarknessLights = new Light[0];
-
-    [Header("Safety")]
-    [SerializeField] private bool blockJumpsWhenInCameraFrame = true;
-    [SerializeField] private bool allowVisibleDarknessJumps = true;
 
     private static QuantumObjectManager instance;
 
@@ -175,7 +169,7 @@ public sealed class QuantumObjectManager : MonoBehaviour
             }
 
             QuantumObject activeObject = group.Locations[group.ActiveIndex];
-            if (!CanUseAsHiddenQuantumPosition(activeObject, allowVisibleDarknessJumps))
+            if (!CanUseAsHiddenQuantumPosition(activeObject))
             {
                 continue;
             }
@@ -201,7 +195,7 @@ public sealed class QuantumObjectManager : MonoBehaviour
                 continue;
             }
 
-            if (CanUseAsHiddenQuantumPosition(candidate, allowVisibleDarknessJumps))
+            if (CanUseAsHiddenQuantumPosition(candidate))
             {
                 candidateBuffer.Add(i);
             }
@@ -218,80 +212,41 @@ public sealed class QuantumObjectManager : MonoBehaviour
         return true;
     }
 
-    private bool CanUseAsHiddenQuantumPosition(QuantumObject quantumObject, bool allowVisibleDarkness)
+    private bool CanUseAsHiddenQuantumPosition(QuantumObject quantumObject)
     {
         if (quantumObject == null)
         {
-            return true;
+            return false;
         }
 
-        pointBuffer.Clear();
-        quantumObject.GetObservationPoints(pointBuffer);
-
-        if (blockJumpsWhenInCameraFrame && !IsObjectBoundsInCameraFrame(quantumObject))
-        {
-            return true;
-        }
-
-        bool hasVisiblePoint = false;
-
-        for (int i = 0; i < pointBuffer.Count; i++)
-        {
-            Vector3 point = pointBuffer[i];
-            if (!IsPointVisible(point, quantumObject))
-            {
-                continue;
-            }
-
-            hasVisiblePoint = true;
-            break;
-        }
-
-        if (!hasVisiblePoint)
-        {
-            return true;
-        }
-
-        return allowVisibleDarkness && AreAllTrackedLightsOff();
+        return AreAllTrackedLightsOff() && !IsObjectInCameraFrame(quantumObject);
     }
 
-    private bool IsObjectBoundsInCameraFrame(QuantumObject quantumObject)
+    private bool IsObjectInCameraFrame(QuantumObject quantumObject)
     {
         if (observerCamera == null || quantumObject == null)
         {
             return false;
         }
 
-        if (!quantumObject.TryGetWorldBounds(out Bounds bounds))
+        pointBuffer.Clear();
+        quantumObject.GetObservationPoints(pointBuffer);
+
+        for (int i = 0; i < pointBuffer.Count; i++)
         {
-            return false;
+            if (IsPointInCameraFrame(pointBuffer[i]))
+            {
+                return true;
+            }
         }
 
-        GeometryUtility.CalculateFrustumPlanes(observerCamera, frustumPlanes);
-        return GeometryUtility.TestPlanesAABB(frustumPlanes, bounds);
-    }
-
-    private bool IsPointVisible(Vector3 point, QuantumObject owner)
-    {
-        if (!IsPointInCameraFrame(point))
+        if (quantumObject.TryGetWorldBounds(out Bounds bounds) && bounds.size.sqrMagnitude > Mathf.Epsilon)
         {
-            return false;
+            GeometryUtility.CalculateFrustumPlanes(observerCamera, frustumPlanes);
+            return GeometryUtility.TestPlanesAABB(frustumPlanes, bounds);
         }
 
-        if (!requireLineOfSight)
-        {
-            return true;
-        }
-
-        Vector3 origin = observerCamera.transform.position;
-        Vector3 offset = point - origin;
-        float distance = offset.magnitude;
-        if (distance <= 0.01f)
-        {
-            return true;
-        }
-
-        return !HasBlockingHit(origin, offset / distance, distance, viewOcclusionMask, owner);
+        return false;
     }
 
     private bool IsPointInCameraFrame(Vector3 point)
@@ -328,23 +283,6 @@ public sealed class QuantumObjectManager : MonoBehaviour
         }
 
         return true;
-    }
-
-    private bool HasBlockingHit(Vector3 origin, Vector3 direction, float distance, LayerMask mask, QuantumObject owner)
-    {
-        RaycastHit[] hits = Physics.RaycastAll(origin, direction, distance, mask, QueryTriggerInteraction.Ignore);
-        for (int i = 0; i < hits.Length; i++)
-        {
-            Collider hitCollider = hits[i].collider;
-            if (hitCollider == null || owner.OwnsCollider(hitCollider))
-            {
-                continue;
-            }
-
-            return true;
-        }
-
-        return false;
     }
 
     private void RefreshTrackedLights()

@@ -23,9 +23,12 @@ public sealed class QuantumObject : MonoBehaviour
 
     private readonly List<Vector3> localObservationPoints = new List<Vector3>();
     private RigidbodyState[] rigidbodyStates;
+    private Vector3 initialLocalPosition;
+    private Quaternion initialLocalRotation;
     private bool pointsDirty = true;
     private bool componentsCached;
     private bool materialized = true;
+    private bool initialPositionStored;
 
     public string Id => id;
     public bool StartsMaterialized => startsMaterialized;
@@ -44,6 +47,7 @@ public sealed class QuantumObject : MonoBehaviour
     private void Awake()
     {
         CacheControlledComponents();
+        StoreInitialPosition();
         RebuildObservationPoints();
     }
 
@@ -63,7 +67,13 @@ public sealed class QuantumObject : MonoBehaviour
     public void SetMaterialized(bool value)
     {
         CacheControlledComponents();
+        bool materializedChanged = materialized != value;
         materialized = value;
+
+        if (materializedChanged)
+        {
+            ResetToInitialPositionAndStopInertia();
+        }
 
         if (controlRenderers)
         {
@@ -238,6 +248,37 @@ public sealed class QuantumObject : MonoBehaviour
         componentsCached = true;
     }
 
+    private void StoreInitialPosition()
+    {
+        initialLocalPosition = transform.localPosition;
+        initialLocalRotation = transform.localRotation;
+        initialPositionStored = true;
+    }
+
+    private void ResetToInitialPositionAndStopInertia()
+    {
+        if (!initialPositionStored)
+        {
+            StoreInitialPosition();
+        }
+
+        transform.SetLocalPositionAndRotation(initialLocalPosition, initialLocalRotation);
+
+        for (int i = 0; i < controlledRigidbodies.Length; i++)
+        {
+            Rigidbody body = controlledRigidbodies[i];
+            if (body == null)
+            {
+                continue;
+            }
+
+            body.linearVelocity = Vector3.zero;
+            body.angularVelocity = Vector3.zero;
+            rigidbodyStates[i].ResetTransform(body);
+            body.Sleep();
+        }
+    }
+
     private void RebuildObservationPoints()
     {
         CacheControlledComponents();
@@ -340,6 +381,8 @@ public sealed class QuantumObject : MonoBehaviour
         private bool isKinematic;
         private bool useGravity;
         private bool detectCollisions;
+        private Vector3 localPosition;
+        private Quaternion localRotation;
 
         public static RigidbodyState From(Rigidbody body)
         {
@@ -348,6 +391,8 @@ public sealed class QuantumObject : MonoBehaviour
                 isKinematic = body.isKinematic,
                 useGravity = body.useGravity,
                 detectCollisions = body.detectCollisions,
+                localPosition = body.transform.localPosition,
+                localRotation = body.transform.localRotation,
             };
         }
 
@@ -356,6 +401,11 @@ public sealed class QuantumObject : MonoBehaviour
             body.isKinematic = isKinematic;
             body.useGravity = useGravity;
             body.detectCollisions = detectCollisions;
+        }
+
+        public void ResetTransform(Rigidbody body)
+        {
+            body.transform.SetLocalPositionAndRotation(localPosition, localRotation);
         }
     }
 }
