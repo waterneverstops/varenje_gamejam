@@ -55,6 +55,14 @@ public class PauseMenu : MonoBehaviour
 
     public void BackToMenu()
     {
+        Time.timeScale = 1f;
+
+        if (playerController != null)
+            playerController.enabled = true;
+
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+
         SceneManager.LoadScene("MainMenu");
     }
 }
