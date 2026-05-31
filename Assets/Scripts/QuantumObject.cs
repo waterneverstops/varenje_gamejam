@@ -109,17 +109,11 @@ public sealed class QuantumObject : MonoBehaviour
 
                 if (value)
                 {
-                    rigidbodyStates[i].ApplyTo(body);
-                    body.WakeUp();
                 }
                 else
                 {
-                    rigidbodyStates[i] = RigidbodyState.From(body);
                     body.linearVelocity = Vector3.zero;
                     body.angularVelocity = Vector3.zero;
-                    body.useGravity = false;
-                    body.isKinematic = true;
-                    body.detectCollisions = false;
                 }
             }
         }
@@ -276,7 +270,6 @@ public sealed class QuantumObject : MonoBehaviour
             body.linearVelocity = Vector3.zero;
             body.angularVelocity = Vector3.zero;
             rigidbodyStates[i].ResetTransform(body);
-            body.Sleep();
         }
     }
 
@@ -379,9 +372,6 @@ public sealed class QuantumObject : MonoBehaviour
 
     private struct RigidbodyState
     {
-        private bool isKinematic;
-        private bool useGravity;
-        private bool detectCollisions;
         private Vector3 localPosition;
         private Quaternion localRotation;
 
@@ -389,19 +379,9 @@ public sealed class QuantumObject : MonoBehaviour
         {
             return new RigidbodyState
             {
-                isKinematic = body.isKinematic,
-                useGravity = body.useGravity,
-                detectCollisions = body.detectCollisions,
                 localPosition = body.transform.localPosition,
                 localRotation = body.transform.localRotation,
             };
-        }
-
-        public void ApplyTo(Rigidbody body)
-        {
-            body.isKinematic = isKinematic;
-            body.useGravity = useGravity;
-            body.detectCollisions = detectCollisions;
         }
 
         public void ResetTransform(Rigidbody body)
