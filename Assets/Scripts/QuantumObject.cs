@@ -110,6 +110,7 @@ public sealed class QuantumObject : MonoBehaviour
                 if (value)
                 {
                     rigidbodyStates[i].ApplyTo(body);
+                    body.WakeUp();
                 }
                 else
                 {
