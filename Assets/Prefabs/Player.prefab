@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 996557994407022769}
   - component: {fileID: 5825489957656999999}
   - component: {fileID: 4812511089135493968}
+  - component: {fileID: 6382703572580036696}
   m_Layer: 7
   m_Name: PlayerCamera
   m_TagString: Untagged
@@ -164,6 +165,25 @@ MonoBehaviour:
     linearDamping: 10
     angularDamping: 10
     constraints: 112
+--- !u!114 &6382703572580036696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4801267864856764960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f1c77276e6644a2b57ba1dc288458e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInteractionManager
+  playerCamera: {fileID: 6325347775014586034}
+  interactionMarker: {fileID: 0}
+  interactionDistance: 3
+  interactionMask:
+    serializedVersion: 2
+    m_Bits: 1
+  triggerInteraction: 1
 --- !u!1 &5436198160116876056
 GameObject:
   m_ObjectHideFlags: 0
@@ -189,7 +209,7 @@ Transform:
   m_GameObject: {fileID: 5436198160116876056}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.75, z: 0}
+  m_LocalPosition: {x: 0, y: 0.543, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -406,7 +426,7 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.3
-  m_Height: 1.5
+  m_Height: 1.2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &6158227739363502507
@@ -457,13 +477,13 @@ MonoBehaviour:
   gamepadSensitivity: 140
   minPitch: -80
   maxPitch: 80
-  defaultFov: 60
-  allowZoom: 1
+  defaultFov: 50
+  allowZoom: 0
   holdZoom: 1
-  zoomFov: 35
+  zoomFov: 5
   fovLerpSpeed: 12
   canMove: 1
-  walkSpeed: 5
+  walkSpeed: 4
   sprintSpeed: 8
   crouchSpeedMultiplier: 0.45
   maxVelocityChange: 12
@@ -471,18 +491,18 @@ MonoBehaviour:
   slideAlongWalls: 1
   minWallSlideAngle: 10
   wallSlideStrength: 0.35
-  canSprint: 1
+  canSprint: 0
   unlimitedSprint: 0
   sprintDuration: 5
   sprintRecoverySpeed: 1.25
   sprintCooldown: 0.5
   sprintFov: 72
   canJump: 1
-  jumpImpulse: 5
+  jumpImpulse: 3.5
   jumpBufferTime: 0.12
   coyoteTime: 0.08
   groundCheckLockAfterJump: 0.08
-  canCrouch: 1
+  canCrouch: 0
   holdCrouch: 1
   crouchHeight: 0.75
   groundMask:
