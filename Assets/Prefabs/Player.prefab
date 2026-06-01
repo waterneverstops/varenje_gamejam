@@ -66,7 +66,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.01
   far clip plane: 1000
   field of view: 60
   orthographic: 0
@@ -343,6 +343,8 @@ MonoBehaviour:
   emptyChargeColor: {r: 1, g: 0.45, b: 0, a: 1}
   minStartupDelay: 0.05
   maxStartupDelay: 0.8
+  startupFlickerIntensityMin: 0.08
+  startupFlickerIntensityMax: 0.35
   startupFlickerIntervalMin: 0.03
   startupFlickerIntervalMax: 0.12
   flickerIntensityVariance: 0.12
@@ -403,7 +405,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.4
+  m_Radius: 0.3
   m_Height: 1.5
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
