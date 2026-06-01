@@ -7,8 +7,12 @@ public sealed class ToyPlace : MonoBehaviour
 {
     [SerializeField] private string id = "Toy";
     [SerializeField] private bool logStateChanges;
+    [SerializeField, Min(0.02f)] private float validationInterval = 0.1f;
 
     private readonly Dictionary<Toy, int> toyOverlapCounts = new Dictionary<Toy, int>();
+    private readonly List<Toy> staleToys = new List<Toy>();
+    private Collider triggerCollider;
+    private float nextValidationTime;
 
     public event Action<ToyPlace> StateChanged;
 
@@ -36,6 +40,22 @@ public sealed class ToyPlace : MonoBehaviour
     {
         id = gameObject.name;
         EnsureTriggerCollider();
+    }
+
+    private void Awake()
+    {
+        EnsureTriggerCollider();
+    }
+
+    private void Update()
+    {
+        if (Time.time < nextValidationTime)
+        {
+            return;
+        }
+
+        nextValidationTime = Time.time + validationInterval;
+        ValidateTrackedToys();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -88,6 +108,69 @@ public sealed class ToyPlace : MonoBehaviour
         StateChanged?.Invoke(this);
     }
 
+    private void ValidateTrackedToys()
+    {
+        if (toyOverlapCounts.Count == 0)
+        {
+            return;
+        }
+
+        staleToys.Clear();
+
+        foreach (Toy toy in toyOverlapCounts.Keys)
+        {
+            if (!IsToyActuallyInside(toy))
+            {
+                staleToys.Add(toy);
+            }
+        }
+
+        if (staleToys.Count == 0)
+        {
+            return;
+        }
+
+        for (int i = 0; i < staleToys.Count; i++)
+        {
+            Toy staleToy = staleToys[i];
+            toyOverlapCounts.Remove(staleToy);
+            LogStateChange($"Toy removed by validation: {(staleToy != null ? staleToy.Id : "null")}");
+        }
+
+        StateChanged?.Invoke(this);
+    }
+
+    private bool IsToyActuallyInside(Toy toy)
+    {
+        if (toy == null || !toy.isActiveAndEnabled || !toy.gameObject.activeInHierarchy)
+        {
+            return false;
+        }
+
+        EnsureTriggerCollider();
+        if (triggerCollider == null || !triggerCollider.enabled || !triggerCollider.gameObject.activeInHierarchy)
+        {
+            return false;
+        }
+
+        Collider[] toyColliders = toy.GetComponentsInChildren<Collider>();
+        for (int i = 0; i < toyColliders.Length; i++)
+        {
+            Collider toyCollider = toyColliders[i];
+            if (toyCollider == null || !toyCollider.enabled || !toyCollider.gameObject.activeInHierarchy)
+            {
+                continue;
+            }
+
+            if (triggerCollider.bounds.Intersects(toyCollider.bounds))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     private void LogStateChange(string message)
     {
         if (!logStateChanges)
@@ -100,7 +183,11 @@ public sealed class ToyPlace : MonoBehaviour
 
     private void EnsureTriggerCollider()
     {
-        Collider triggerCollider = GetComponent<Collider>();
+        if (triggerCollider == null)
+        {
+            triggerCollider = GetComponent<Collider>();
+        }
+
         if (triggerCollider != null)
         {
             triggerCollider.isTrigger = true;
@@ -115,5 +202,6 @@ public sealed class ToyPlace : MonoBehaviour
         }
 
         EnsureTriggerCollider();
+        validationInterval = Mathf.Max(0.02f, validationInterval);
     }
 }
