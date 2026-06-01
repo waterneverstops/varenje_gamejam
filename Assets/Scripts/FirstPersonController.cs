@@ -451,34 +451,19 @@ public sealed class FirstPersonController : MonoBehaviour, GameInputs.IPlayerAct
         }
 
         float inputMagnitude = Mathf.Clamp01(direction.magnitude);
-        float minSlideDot = Mathf.Cos(minWallSlideAngle * Mathf.Deg2Rad);
+        float minIntoWallDot = Mathf.Sin(minWallSlideAngle * Mathf.Deg2Rad);
 
         for (int i = 0; i < wallNormalCount; i++)
         {
             Vector3 normal = wallNormals[i];
             Vector3 moveDirection = direction.normalized;
-            float signedIntoWall = Vector3.Dot(moveDirection, normal);
-            if (signedIntoWall < 0f)
-            {
-                normal = -normal;
-                signedIntoWall = -signedIntoWall;
-            }
-
-            if (signedIntoWall <= 0f)
+            float intoWall = -Vector3.Dot(moveDirection, normal);
+            if (intoWall <= minIntoWallDot)
             {
                 continue;
             }
 
-            Vector3 slideDirection = Vector3.ProjectOnPlane(direction, normal);
-            if (signedIntoWall >= minSlideDot)
-            {
-                direction = Vector3.zero;
-                continue;
-            }
-
-            float slideFactor = Mathf.InverseLerp(minSlideDot, 0f, signedIntoWall);
-            float slideScale = Mathf.Lerp(0f, wallSlideStrength, slideFactor);
-            direction = slideDirection * slideScale;
+            direction = Vector3.ProjectOnPlane(direction, normal);
         }
 
         if (direction.sqrMagnitude <= Mathf.Epsilon)
@@ -486,7 +471,8 @@ public sealed class FirstPersonController : MonoBehaviour, GameInputs.IPlayerAct
             return Vector3.zero;
         }
 
-        return Vector3.ClampMagnitude(direction.normalized * inputMagnitude, 1f);
+        float slideMagnitude = Mathf.Lerp(direction.magnitude, inputMagnitude, wallSlideStrength);
+        return direction.normalized * Mathf.Min(inputMagnitude, slideMagnitude);
     }
 
     private void RegisterWallNormal(Vector3 normal)
