@@ -103,6 +103,7 @@ GameObject:
   - component: {fileID: 2866936751924284959}
   - component: {fileID: 4282104946002896855}
   - component: {fileID: 2984170901517570523}
+  - component: {fileID: 7511721788059594327}
   m_Layer: 6
   m_Name: toy_1
   m_TagString: Untagged
@@ -224,3 +225,16 @@ MonoBehaviour:
   - {fileID: 4282104946002896855}
   controlledRigidbodies:
   - {fileID: 1148103248626099886}
+--- !u!114 &7511721788059594327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5585781131085308073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7db4e8cc8164a5d83a6c42f36c747df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Toy
+  id: toy_1

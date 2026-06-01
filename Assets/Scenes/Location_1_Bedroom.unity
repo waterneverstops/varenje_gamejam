@@ -406,6 +406,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 192857715}
+  - component: {fileID: 192857717}
+  - component: {fileID: 192857716}
   m_Layer: 0
   m_Name: toy_1_position_final
   m_TagString: Untagged
@@ -422,12 +424,47 @@ Transform:
   m_GameObject: {fileID: 192857714}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.0427504, y: 0.97542, z: -2.36626}
+  m_LocalPosition: {x: 4.992, y: 1.189, z: -2.39}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 900629489}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &192857716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 192857714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fdf58a0aa524f1ab6f5d34eb89665a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ToyPlace
+  id: toy_1
+  logStateChanges: 1
+--- !u!65 &192857717
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 192857714}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.35, y: 0.35, z: 0.35}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!64 &220034540
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -491,6 +528,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 309117630}
+  - component: {fileID: 309117632}
+  - component: {fileID: 309117631}
   m_Layer: 0
   m_Name: toy_2_position_final
   m_TagString: Untagged
@@ -507,12 +546,47 @@ Transform:
   m_GameObject: {fileID: 309117629}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.5497503, y: 0.49562, z: -2.36626}
+  m_LocalPosition: {x: 4.57, y: 0.688, z: -2.416}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 900629489}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &309117631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 309117629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fdf58a0aa524f1ab6f5d34eb89665a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ToyPlace
+  id: toy_2
+  logStateChanges: 1
+--- !u!65 &309117632
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 309117629}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.35, y: 0.35, z: 0.35}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &318265910
 GameObject:
   m_ObjectHideFlags: 0
@@ -763,6 +837,8 @@ GameObject:
   m_Component:
   - component: {fileID: 467130068}
   - component: {fileID: 467130069}
+  - component: {fileID: 467130070}
+  - component: {fileID: 467130071}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -804,6 +880,36 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   trackedDarknessLights: []
+--- !u!114 &467130070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 467130067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1f7634e7f674b99b53e5f70688474dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ToysManager
+  toyPlaces:
+  - {fileID: 192857716}
+  - {fileID: 309117631}
+  - {fileID: 1926920278}
+  solvedObject: {fileID: 656842682}
+  hideSolvedObjectOnAwake: 1
+--- !u!114 &467130071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 467130067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d72d13ffb5b4ca593dc8771f0a2325d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AlbumManager
 --- !u!4 &549352428 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0b0c02fcf5c5524479a5260b03f39a50, type: 3}
@@ -1074,6 +1180,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 4809237583456727913, guid: af6274102c683154fa9e1261a78fc984, type: 3}
   m_PrefabInstance: {fileID: 654778404}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &656842682 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4650352533735035158, guid: 25092f73c05c02d48a195e758cb16b4e, type: 3}
+  m_PrefabInstance: {fileID: 4353126141391778201}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &686307765
 GameObject:
@@ -2453,6 +2564,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1926920276}
+  - component: {fileID: 1926920277}
+  - component: {fileID: 1926920278}
   m_Layer: 0
   m_Name: toy_3_position_final
   m_TagString: Untagged
@@ -2469,12 +2582,47 @@ Transform:
   m_GameObject: {fileID: 1926920275}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.6877499, y: 1.4536201, z: -2.4432602}
+  m_LocalPosition: {x: 3.6877499, y: 1.646, z: -2.4432602}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 900629489}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1926920277
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1926920275}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.35, y: 0.35, z: 0.35}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1926920278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1926920275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fdf58a0aa524f1ab6f5d34eb89665a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ToyPlace
+  id: toy_3
+  logStateChanges: 1
 --- !u!1001 &1935030499
 PrefabInstance:
   m_ObjectHideFlags: 0
