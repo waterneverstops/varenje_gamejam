@@ -1045,6 +1045,10 @@ PrefabInstance:
       propertyPath: playerController
       value: 
       objectReference: {fileID: 1361226804}
+    - target: {fileID: 5099455973614890454, guid: d849196dc43481446a1a27e06f1ab6cb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5112962048987441035, guid: d849196dc43481446a1a27e06f1ab6cb, type: 3}
       propertyPath: m_Name
       value: LevelUICanvas
