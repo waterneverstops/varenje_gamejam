@@ -19,10 +19,17 @@ public class InputService : SingleBehaviour<InputService>
 
         GameControls = new GameInputs();
         GameControls.Enable();
+        PlayerStateManager.Instance.PlayerInputAllowedChanged += ApplyPlayerInputState;
+        ApplyPlayerInputState(PlayerStateManager.Instance.CanProcessPlayerInput);
     }
 
     private void OnDestroy()
     {
+        if (PlayerStateManager.HasInstance)
+        {
+            PlayerStateManager.Instance.PlayerInputAllowedChanged -= ApplyPlayerInputState;
+        }
+
         if (GameControls == null)
         {
             return;
@@ -56,4 +63,21 @@ public class InputService : SingleBehaviour<InputService>
     public void SubscribeGrab(GameInputs.IPlayerActions subscriber) => SubscribePlayer(subscriber);
 
     public void UnsubscribeGrab(GameInputs.IPlayerActions subscriber) => UnsubscribePlayer(subscriber);
+
+    private void ApplyPlayerInputState(bool canProcessPlayerInput)
+    {
+        if (GameControls == null)
+        {
+            return;
+        }
+
+        if (canProcessPlayerInput)
+        {
+            GameControls.Player.Enable();
+        }
+        else
+        {
+            GameControls.Player.Disable();
+        }
+    }
 }

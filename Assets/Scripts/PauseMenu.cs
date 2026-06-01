@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
@@ -14,20 +13,35 @@ public class PauseMenu : MonoBehaviour
         pauseMenu.SetActive(false);
     }
 
-    private void Update()
+    private void OnEnable()
     {
-        if (Keyboard.current.escapeKey.wasPressedThisFrame)
+        EscapeButtonManager.Instance.EscapePressedWithoutHandler += PauseGame;
+    }
+
+    private void OnDisable()
+    {
+        if (EscapeButtonManager.HasInstance)
         {
-            if (isPaused)
-                ResumeGame();
-            else
-                PauseGame();
+            EscapeButtonManager.Instance.EscapePressedWithoutHandler -= PauseGame;
+            EscapeButtonManager.Instance.Unregister(this);
+        }
+
+        if (PlayerStateManager.HasInstance)
+        {
+            PlayerStateManager.Instance.UnblockPlayerInput(this);
         }
     }
 
     public void PauseGame()
     {
+        if (isPaused)
+        {
+            return;
+        }
+
         isPaused = true;
+        EscapeButtonManager.Instance.Register(this, ResumeGame);
+        PlayerStateManager.Instance.BlockPlayerInput(this);
 
         pauseMenu.SetActive(true);
         Time.timeScale = 0f;
@@ -41,7 +55,14 @@ public class PauseMenu : MonoBehaviour
 
     public void ResumeGame()
     {
+        if (!isPaused)
+        {
+            return;
+        }
+
         isPaused = false;
+        EscapeButtonManager.Instance.Unregister(this);
+        PlayerStateManager.Instance.UnblockPlayerInput(this);
 
         pauseMenu.SetActive(false);
         Time.timeScale = 1f;
@@ -55,6 +76,9 @@ public class PauseMenu : MonoBehaviour
 
     public void BackToMenu()
     {
+        isPaused = false;
+        EscapeButtonManager.Instance.Unregister(this);
+        PlayerStateManager.Instance.UnblockPlayerInput(this);
         Time.timeScale = 1f;
 
         if (playerController != null)

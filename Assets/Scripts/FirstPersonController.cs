@@ -142,6 +142,7 @@ public sealed class FirstPersonController : MonoBehaviour, GameInputs.IPlayerAct
     private void OnEnable()
     {
         InputService.Instance.SubscribeMovement(this);
+        PlayerStateManager.Instance.PlayerInputAllowedChanged += OnPlayerInputAllowedChanged;
         subscribedToInput = true;
 
         if (lockCursor)
@@ -158,7 +159,23 @@ public sealed class FirstPersonController : MonoBehaviour, GameInputs.IPlayerAct
             InputService.Instance.UnsubscribeMovement(this);
         }
 
+        if (PlayerStateManager.HasInstance)
+        {
+            PlayerStateManager.Instance.PlayerInputAllowedChanged -= OnPlayerInputAllowedChanged;
+        }
+
         subscribedToInput = false;
+        ClearInputState();
+
+        if (lockCursor)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+    }
+
+    private void ClearInputState()
+    {
         moveInput = Vector2.zero;
         lookInput = Vector2.zero;
         sprintHeld = false;
@@ -168,11 +185,13 @@ public sealed class FirstPersonController : MonoBehaviour, GameInputs.IPlayerAct
         jumpPressedTime = -1f;
         groundCheckLockTimer = 0f;
         wallNormalCount = 0;
+    }
 
-        if (lockCursor)
+    private void OnPlayerInputAllowedChanged(bool canProcessPlayerInput)
+    {
+        if (!canProcessPlayerInput)
         {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            ClearInputState();
         }
     }
 

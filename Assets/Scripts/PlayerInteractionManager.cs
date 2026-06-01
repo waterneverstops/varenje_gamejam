@@ -49,6 +49,13 @@ public sealed class PlayerInteractionManager : MonoBehaviour, GameInputs.IPlayer
 
     private void Update()
     {
+        if (!PlayerStateManager.Instance.CanProcessPlayerInput)
+        {
+            currentInteractable = null;
+            SetMarkerVisible(false);
+            return;
+        }
+
         RefreshCurrentInteractable();
     }
 
@@ -62,6 +69,11 @@ public sealed class PlayerInteractionManager : MonoBehaviour, GameInputs.IPlayer
 
     public void TryInteract()
     {
+        if (!PlayerStateManager.Instance.CanProcessPlayerInput)
+        {
+            return;
+        }
+
         RefreshCurrentInteractable();
 
         if (currentInteractable == null)

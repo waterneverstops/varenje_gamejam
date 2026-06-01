@@ -1037,18 +1037,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4504783952202601545, guid: d849196dc43481446a1a27e06f1ab6cb, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5073576516812214858, guid: d849196dc43481446a1a27e06f1ab6cb, type: 3}
       propertyPath: playerController
       value: 
       objectReference: {fileID: 1361226804}
-    - target: {fileID: 5099455973614890454, guid: d849196dc43481446a1a27e06f1ab6cb, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5112962048987441035, guid: d849196dc43481446a1a27e06f1ab6cb, type: 3}
       propertyPath: m_Name
       value: LevelUICanvas
@@ -1058,6 +1050,22 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d849196dc43481446a1a27e06f1ab6cb, type: 3}
+--- !u!114 &602199148 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6892255790184133841, guid: d849196dc43481446a1a27e06f1ab6cb, type: 3}
+  m_PrefabInstance: {fileID: 602199147}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 602199149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da2dbc0858a3e5a4a9ae9dccfa4a382b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LockWindowController
+--- !u!1 &602199149 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5099455973614890454, guid: d849196dc43481446a1a27e06f1ab6cb, type: 3}
+  m_PrefabInstance: {fileID: 602199147}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &631194420
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2278,6 +2286,46 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4809237583456727913, guid: af6274102c683154fa9e1261a78fc984, type: 3}
   m_PrefabInstance: {fileID: 1604411145}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1621309762 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4564577464659487881, guid: ed372d72e4b20064ea8bf0fbd0539c5c, type: 3}
+  m_PrefabInstance: {fileID: 1935030499}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1621309763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1621309762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e3d9ea5ad15ded429997c358e8b867e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LockPuzzle
+  lockWindow: {fileID: 602199149}
+  lockWindowController: {fileID: 602199148}
+--- !u!65 &1621309767
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1621309762}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!64 &1642956197
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -3212,6 +3260,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8919606538087785976, guid: ed372d72e4b20064ea8bf0fbd0539c5c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1573669672}
+    - targetCorrespondingSourceObject: {fileID: 4564577464659487881, guid: ed372d72e4b20064ea8bf0fbd0539c5c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1621309763}
+    - targetCorrespondingSourceObject: {fileID: 4564577464659487881, guid: ed372d72e4b20064ea8bf0fbd0539c5c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1621309767}
     - targetCorrespondingSourceObject: {fileID: 6186513575976232460, guid: ed372d72e4b20064ea8bf0fbd0539c5c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2052804855}
@@ -3970,7 +4024,7 @@ SceneRoots:
   - {fileID: 2095242493}
   - {fileID: 467130068}
   - {fileID: 930205753}
-  - {fileID: 378040233}
   - {fileID: 910964787}
-  - {fileID: 900629489}
   - {fileID: 602199147}
+  - {fileID: 378040233}
+  - {fileID: 900629489}
