@@ -5,7 +5,7 @@ public sealed class AlbumManager : MonoBehaviour
 {
     private static AlbumManager instance;
 
-    private readonly HashSet<string> _collectedCards = new HashSet<string>();
+    private readonly HashSet<string> _collectedIds = new HashSet<string>();
 
     public static bool HasInstance => instance != null;
 
@@ -28,8 +28,9 @@ public sealed class AlbumManager : MonoBehaviour
         }
     }
 
-    public IReadOnlyCollection<string> CollectedCards => _collectedCards;
-    public int CollectedCount => _collectedCards.Count;
+    public IReadOnlyCollection<string> CollectedIds => _collectedIds;
+    public int IdsCount => _collectedIds.Count;
+    public event System.Action<string> IdCollected;
 
     private void Awake()
     {
@@ -50,19 +51,25 @@ public sealed class AlbumManager : MonoBehaviour
         }
     }
 
-    public bool CollectCard(string id)
+    public bool CollectId(string id)
     {
         if (string.IsNullOrWhiteSpace(id))
         {
-            Debug.LogWarning("Album card id is empty.", this);
+            Debug.LogWarning("Album id is empty.", this);
             return false;
         }
 
-        return _collectedCards.Add(id);
+        bool isAdded = _collectedIds.Add(id);
+        if (isAdded)
+        {
+            IdCollected?.Invoke(id);
+        }
+
+        return isAdded;
     }
 
-    public bool HasCard(string id)
+    public bool HasId(string id)
     {
-        return !string.IsNullOrWhiteSpace(id) && _collectedCards.Contains(id);
+        return !string.IsNullOrWhiteSpace(id) && _collectedIds.Contains(id);
     }
 }

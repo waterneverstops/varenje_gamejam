@@ -1905,6 +1905,7 @@ GameObject:
   - component: {fileID: 2068269758844997612}
   - component: {fileID: 1145703978931406088}
   - component: {fileID: 6487099592037234422}
+  - component: {fileID: 2049596760309465857}
   m_Layer: 5
   m_Name: Card
   m_TagString: Untagged
@@ -1969,6 +1970,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2049596760309465857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1253587847333624476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a3ed68f038d4984ab1913ba1a601904, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AlbumIdComponentToggle
+  id: third_puzzle
+  activeWhenIdExists: 1
 --- !u!1 &1309160284568721960
 GameObject:
   m_ObjectHideFlags: 0
@@ -8379,6 +8394,7 @@ GameObject:
   - component: {fileID: 3487686589657238034}
   - component: {fileID: 3460427101152203769}
   - component: {fileID: 4696329041447476492}
+  - component: {fileID: 6339195885191324315}
   m_Layer: 5
   m_Name: Card
   m_TagString: Untagged
@@ -8443,6 +8459,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6339195885191324315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7398235398129459428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a3ed68f038d4984ab1913ba1a601904, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AlbumIdComponentToggle
+  id: first_puzzle
+  activeWhenIdExists: 1
 --- !u!1 &7620308736869028364
 GameObject:
   m_ObjectHideFlags: 0
@@ -9379,6 +9409,7 @@ GameObject:
   - component: {fileID: 9196290489821236011}
   - component: {fileID: 3679814836161889611}
   - component: {fileID: 6192883414161462113}
+  - component: {fileID: 2687480357441172086}
   m_Layer: 5
   m_Name: Card
   m_TagString: Untagged
@@ -9443,6 +9474,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2687480357441172086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8815253739577927028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a3ed68f038d4984ab1913ba1a601904, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AlbumIdComponentToggle
+  id: second_puzzle
+  activeWhenIdExists: 1
 --- !u!1 &9001417580003850321
 GameObject:
   m_ObjectHideFlags: 0

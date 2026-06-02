@@ -18,7 +18,7 @@ public sealed class AlbumCard : Interactable
             return;
         }
 
-        AlbumManager.Instance.CollectCard(id);
+        AlbumManager.Instance.CollectId(id);
         gameObject.SetActive(false);
     }
 
