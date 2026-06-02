@@ -715,6 +715,7 @@ Transform:
   - {fileID: 1294635096}
   - {fileID: 1091142565}
   - {fileID: 1126628688}
+  - {fileID: 874517963}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &405771043
@@ -1266,6 +1267,76 @@ MonoBehaviour:
   openDuration: 1
   openEase: 4
   useUnscaledTime: 1
+--- !u!1001 &874517962
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 378040233}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: bb67ad5c97e54b9438d7aee9815b27cd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -9.43511
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: bb67ad5c97e54b9438d7aee9815b27cd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.117
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: bb67ad5c97e54b9438d7aee9815b27cd, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -16.889
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: bb67ad5c97e54b9438d7aee9815b27cd, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: bb67ad5c97e54b9438d7aee9815b27cd, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: bb67ad5c97e54b9438d7aee9815b27cd, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: bb67ad5c97e54b9438d7aee9815b27cd, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: bb67ad5c97e54b9438d7aee9815b27cd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: bb67ad5c97e54b9438d7aee9815b27cd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: bb67ad5c97e54b9438d7aee9815b27cd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: bb67ad5c97e54b9438d7aee9815b27cd, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 067e61c838112404889dc0db43c99ab8, type: 2}
+    - target: {fileID: 919132149155446097, guid: bb67ad5c97e54b9438d7aee9815b27cd, type: 3}
+      propertyPath: m_Name
+      value: Rabbit
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: bb67ad5c97e54b9438d7aee9815b27cd, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bb67ad5c97e54b9438d7aee9815b27cd, type: 3}
+--- !u!4 &874517963 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: bb67ad5c97e54b9438d7aee9815b27cd, type: 3}
+  m_PrefabInstance: {fileID: 874517962}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &900629488
 GameObject:
   m_ObjectHideFlags: 0
@@ -2127,7 +2198,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1313099781
 Transform:
@@ -3334,7 +3405,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -1124743786986086761, guid: ed372d72e4b20064ea8bf0fbd0539c5c, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 0
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: -765100661303257307, guid: ed372d72e4b20064ea8bf0fbd0539c5c, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
