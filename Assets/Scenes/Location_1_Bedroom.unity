@@ -1249,6 +1249,23 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3616083601132905400, guid: 3a4d5f7ae4a441e44b6a918a042c6ee5, type: 3}
   m_PrefabInstance: {fileID: 835780405}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &838834523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1935030504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f0d64cbe0d14f14a9c736a0b8e0a2a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DoorOpener
+  door: {fileID: 1719694194}
+  openedTransform: {fileID: 1313099781}
+  openDuration: 1
+  openEase: 4
+  useUnscaledTime: 1
 --- !u!1 &900629488
 GameObject:
   m_ObjectHideFlags: 0
@@ -2106,7 +2123,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1313099781}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: DoorTarget
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2607,7 +2624,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LockPuzzle
   lockWindow: {fileID: 5099455974115899837}
   lockWindowController: {fileID: 6892255790685036730}
-  doorOpener: {fileID: 0}
+  doorOpener: {fileID: 838834523}
 --- !u!65 &1621309767
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2629,6 +2646,11 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &1719694194 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7537700851931233920, guid: ed372d72e4b20064ea8bf0fbd0539c5c, type: 3}
+  m_PrefabInstance: {fileID: 1935030499}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1747775434
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3307,8 +3329,12 @@ PrefabInstance:
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: -1124743786986086761, guid: ed372d72e4b20064ea8bf0fbd0539c5c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1124743786986086761, guid: ed372d72e4b20064ea8bf0fbd0539c5c, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 2147483647
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -765100661303257307, guid: ed372d72e4b20064ea8bf0fbd0539c5c, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -3624,6 +3650,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2146765251604607282, guid: ed372d72e4b20064ea8bf0fbd0539c5c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1785788256}
+    - targetCorrespondingSourceObject: {fileID: -1124743786986086761, guid: ed372d72e4b20064ea8bf0fbd0539c5c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 838834523}
     - targetCorrespondingSourceObject: {fileID: 4564577464659487881, guid: ed372d72e4b20064ea8bf0fbd0539c5c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1621309763}
@@ -3676,6 +3705,11 @@ GameObject:
 --- !u!1 &1935030503 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -7355052670254981291, guid: ed372d72e4b20064ea8bf0fbd0539c5c, type: 3}
+  m_PrefabInstance: {fileID: 1935030499}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1935030504 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -1124743786986086761, guid: ed372d72e4b20064ea8bf0fbd0539c5c, type: 3}
   m_PrefabInstance: {fileID: 1935030499}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1935030505 stripped

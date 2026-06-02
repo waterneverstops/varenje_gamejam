@@ -1,4 +1,3 @@
-using DG.Tweening;
 using UnityEngine;
 
 public sealed class LockPuzzle : Interactable
@@ -8,26 +7,23 @@ public sealed class LockPuzzle : Interactable
     [SerializeField] private LockWindowController lockWindowController;
 
     [Header("Door")]
-    [SerializeField] private GameObject door;
-    [SerializeField] private Transform openedDoorTransform;
-    [Min(0f)]
-    [SerializeField] private float doorOpenDuration = 1f;
-    [SerializeField] private Ease doorOpenEase = Ease.InOutSine;
+    [SerializeField] private DoorOpener doorOpener;
 
     private bool isOpen;
     private bool isSolved;
-    private Tween doorOpenTween;
 
     public override bool CanInteract => base.CanInteract && !isOpen && !isSolved;
 
     private void Reset()
     {
         FindWindowController();
+        FindDoorOpener();
     }
 
     private void Awake()
     {
         FindWindowController();
+        FindDoorOpener();
 
         if (lockWindow != null)
         {
@@ -69,7 +65,7 @@ public sealed class LockPuzzle : Interactable
         PlayerStateManager.Instance.UnblockPlayerInput(this);
         RestoreGameCursorIfInputAllowed();
         OpenDoor();
-        enabled = false;
+        gameObject.SetActive(false);
     }
 
     private void OnDisable()
@@ -89,11 +85,6 @@ public sealed class LockPuzzle : Interactable
         {
             lockWindow.SetActive(false);
         }
-    }
-
-    private void OnDestroy()
-    {
-        doorOpenTween?.Kill();
     }
 
     private void FindWindowController()
@@ -124,18 +115,24 @@ public sealed class LockPuzzle : Interactable
 
     private void OpenDoor()
     {
-        if (door == null || openedDoorTransform == null)
+        FindDoorOpener();
+
+        if (doorOpener == null)
         {
-            Debug.LogWarning($"{nameof(LockPuzzle)} on {name} has no door or opened door transform assigned.", this);
+            Debug.LogWarning($"{nameof(LockPuzzle)} on {name} has no door opener assigned.", this);
             return;
         }
 
-        Transform doorTransform = door.transform;
-        doorOpenTween?.Kill();
-        doorOpenTween = DOTween.Sequence()
-            .SetEase(doorOpenEase)
-            .SetUpdate(true)
-            .Join(doorTransform.DOMove(openedDoorTransform.position, doorOpenDuration))
-            .Join(doorTransform.DORotateQuaternion(openedDoorTransform.rotation, doorOpenDuration));
+        doorOpener.Open();
+    }
+
+    private void FindDoorOpener()
+    {
+        if (doorOpener != null)
+        {
+            return;
+        }
+
+        doorOpener = GetComponentInChildren<DoorOpener>(true);
     }
 }
