@@ -23,7 +23,7 @@ public class PauseMenu : MonoBehaviour
         if (EscapeButtonManager.HasInstance)
         {
             EscapeButtonManager.Instance.EscapePressedWithoutHandler -= PauseGame;
-            EscapeButtonManager.Instance.Unregister(this);
+            EscapeButtonManager.Instance.UnregisterWindow(this);
         }
 
         if (PlayerStateManager.HasInstance)
@@ -40,7 +40,7 @@ public class PauseMenu : MonoBehaviour
         }
 
         isPaused = true;
-        EscapeButtonManager.Instance.Register(this, ResumeGame);
+        EscapeButtonManager.Instance.RegisterWindow(this, ResumeGame);
         PlayerStateManager.Instance.BlockPlayerInput(this);
 
         pauseMenu.SetActive(true);
@@ -61,7 +61,7 @@ public class PauseMenu : MonoBehaviour
         }
 
         isPaused = false;
-        EscapeButtonManager.Instance.Unregister(this);
+        EscapeButtonManager.Instance.UnregisterWindow(this);
         PlayerStateManager.Instance.UnblockPlayerInput(this);
 
         pauseMenu.SetActive(false);
@@ -77,7 +77,7 @@ public class PauseMenu : MonoBehaviour
     public void BackToMenu()
     {
         isPaused = false;
-        EscapeButtonManager.Instance.Unregister(this);
+        EscapeButtonManager.Instance.UnregisterWindow(this);
         PlayerStateManager.Instance.UnblockPlayerInput(this);
         Time.timeScale = 1f;
 

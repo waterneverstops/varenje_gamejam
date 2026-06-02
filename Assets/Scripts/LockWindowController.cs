@@ -68,7 +68,7 @@ public sealed class LockWindowController : MonoBehaviour
         if (!isOpen)
         {
             isOpen = true;
-            EscapeButtonManager.Instance.Register(this, Close);
+            EscapeButtonManager.Instance.RegisterWindow(this, Close);
         }
 
         Cursor.visible = true;
@@ -107,7 +107,7 @@ public sealed class LockWindowController : MonoBehaviour
         if (isOpen)
         {
             isOpen = false;
-            EscapeButtonManager.Instance.Unregister(this);
+            EscapeButtonManager.Instance.UnregisterWindow(this);
         }
 
         if (gameObject.activeSelf)

@@ -10,6 +10,13 @@ public sealed class EscapeButtonManager : SingleBehaviour<EscapeButtonManager>
 
     public event Action EscapePressedWithoutHandler;
 
+    public bool HasOpenWindow {
+        get {
+            RemoveDestroyedHandlers();
+            return handlers.Count > 0;
+        }
+    }
+
     private void Update()
     {
         if (Keyboard.current == null || !Keyboard.current.escapeKey.wasPressedThisFrame)
@@ -25,18 +32,18 @@ public sealed class EscapeButtonManager : SingleBehaviour<EscapeButtonManager>
         EscapePressedWithoutHandler?.Invoke();
     }
 
-    public void Register(object owner, Action closeAction)
+    public void RegisterWindow(object owner, Action closeAction)
     {
         if (owner == null || closeAction == null)
         {
             return;
         }
 
-        Unregister(owner);
+        UnregisterWindow(owner);
         handlers.Add(new EscapeHandler(owner, closeAction));
     }
 
-    public void Unregister(object owner)
+    public void UnregisterWindow(object owner)
     {
         if (owner == null)
         {
@@ -51,6 +58,30 @@ public sealed class EscapeButtonManager : SingleBehaviour<EscapeButtonManager>
             }
         }
     }
+
+    public bool IsWindowRegistered(object owner)
+    {
+        if (owner == null)
+        {
+            return false;
+        }
+
+        RemoveDestroyedHandlers();
+
+        for (int i = handlers.Count - 1; i >= 0; i--)
+        {
+            if (ReferenceEquals(handlers[i].Owner, owner))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public void Register(object owner, Action closeAction) => RegisterWindow(owner, closeAction);
+
+    public void Unregister(object owner) => UnregisterWindow(owner);
 
     private bool TryCloseTopHandler()
     {
@@ -69,6 +100,17 @@ public sealed class EscapeButtonManager : SingleBehaviour<EscapeButtonManager>
         }
 
         return false;
+    }
+
+    private void RemoveDestroyedHandlers()
+    {
+        for (int i = handlers.Count - 1; i >= 0; i--)
+        {
+            if (handlers[i].Owner is UnityEngine.Object unityOwner && unityOwner == null)
+            {
+                handlers.RemoveAt(i);
+            }
+        }
     }
 
     private readonly struct EscapeHandler

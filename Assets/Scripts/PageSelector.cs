@@ -10,24 +10,52 @@ public class PageSelector : MonoBehaviour
 
     private void Update()
     {
-        if (Keyboard.current.tabKey.wasPressedThisFrame && !isOpen)
+        if (Keyboard.current == null || !Keyboard.current.tabKey.wasPressedThisFrame)
         {
-            OpenAlbum();
+            return;
         }
-        else if (Keyboard.current.tabKey.wasPressedThisFrame && isOpen)
+
+        if (isOpen)
         {
             CloseAlbum();
+            return;
+        }
+
+        if (EscapeButtonManager.Instance.HasOpenWindow)
+        {
+            return;
+        }
+
+        OpenAlbum();
+    }
+
+    private void OnDisable()
+    {
+        if (isOpen)
+        {
+            CloseAlbum();
+        }
+
+        if (EscapeButtonManager.HasInstance)
+        {
+            EscapeButtonManager.Instance.UnregisterWindow(this);
         }
     }
 
     public void OpenAlbum()
     {
+        if (isOpen || album == null || pages == null || pages.Length == 0 || pages[0] == null)
+        {
+            return;
+        }
+
         isOpen = true;
         activePage = pages[0];
+        EscapeButtonManager.Instance.RegisterWindow(this, CloseAlbum);
+
         album.SetActive(true);
         activePage.SetActive(true);
 
-        // Включаем паузу: блокируем ввод игрока, останавливаем время и показываем курсор
         if (PlayerStateManager.HasInstance)
         {
             PlayerStateManager.Instance.BlockPlayerInput(this);
@@ -40,12 +68,25 @@ public class PageSelector : MonoBehaviour
 
     public void CloseAlbum()
     {
+        if (!isOpen)
+        {
+            return;
+        }
+
         isOpen = false;
+        if (EscapeButtonManager.HasInstance)
+        {
+            EscapeButtonManager.Instance.UnregisterWindow(this);
+        }
+
         album.SetActive(false);
-        activePage.SetActive(false);
+        if (activePage != null)
+        {
+            activePage.SetActive(false);
+        }
+
         activePage = null;
 
-        // Выключаем паузу: разблокируем ввод игрока, восстанавливаем время и скрываем курсор
         if (PlayerStateManager.HasInstance)
         {
             PlayerStateManager.Instance.UnblockPlayerInput(this);
@@ -55,14 +96,15 @@ public class PageSelector : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
-    
-
-    
 
     public void GoToPage(int pageIndex)
     {
-        
-        if (pageIndex >= 0 && pageIndex < pages.Length)
+        if (!isOpen || activePage == null)
+        {
+            return;
+        }
+
+        if (pages != null && pageIndex >= 0 && pageIndex < pages.Length && pages[pageIndex] != null)
         {
             activePage.SetActive(false);
             activePage = pages[pageIndex];
