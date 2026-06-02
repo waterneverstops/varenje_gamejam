@@ -2607,10 +2607,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LockPuzzle
   lockWindow: {fileID: 5099455974115899837}
   lockWindowController: {fileID: 6892255790685036730}
-  door: {fileID: 1935030504}
-  openedDoorTransform: {fileID: 1313099781}
-  doorOpenDuration: 1
-  doorOpenEase: 4
+  doorOpener: {fileID: 0}
 --- !u!65 &1621309767
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2692,6 +2689,10 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: 7837464629202011281, guid: 0b0c02fcf5c5524479a5260b03f39a50, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 95fbeb6282ef31e4c8c044cb9d4eec5c, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3675,11 +3676,6 @@ GameObject:
 --- !u!1 &1935030503 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -7355052670254981291, guid: ed372d72e4b20064ea8bf0fbd0539c5c, type: 3}
-  m_PrefabInstance: {fileID: 1935030499}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1935030504 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -1124743786986086761, guid: ed372d72e4b20064ea8bf0fbd0539c5c, type: 3}
   m_PrefabInstance: {fileID: 1935030499}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1935030505 stripped
