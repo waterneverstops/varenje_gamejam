@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 public sealed class LockPuzzle : Interactable
@@ -6,8 +7,16 @@ public sealed class LockPuzzle : Interactable
     [SerializeField] private GameObject lockWindow;
     [SerializeField] private LockWindowController lockWindowController;
 
+    [Header("Door")]
+    [SerializeField] private GameObject door;
+    [SerializeField] private Transform openedDoorTransform;
+    [Min(0f)]
+    [SerializeField] private float doorOpenDuration = 1f;
+    [SerializeField] private Ease doorOpenEase = Ease.InOutSine;
+
     private bool isOpen;
     private bool isSolved;
+    private Tween doorOpenTween;
 
     public override bool CanInteract => base.CanInteract && !isOpen && !isSolved;
 
@@ -59,7 +68,8 @@ public sealed class LockPuzzle : Interactable
         isOpen = false;
         PlayerStateManager.Instance.UnblockPlayerInput(this);
         RestoreGameCursorIfInputAllowed();
-        gameObject.SetActive(false);
+        OpenDoor();
+        enabled = false;
     }
 
     private void OnDisable()
@@ -79,6 +89,11 @@ public sealed class LockPuzzle : Interactable
         {
             lockWindow.SetActive(false);
         }
+    }
+
+    private void OnDestroy()
+    {
+        doorOpenTween?.Kill();
     }
 
     private void FindWindowController()
@@ -105,5 +120,22 @@ public sealed class LockPuzzle : Interactable
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    private void OpenDoor()
+    {
+        if (door == null || openedDoorTransform == null)
+        {
+            Debug.LogWarning($"{nameof(LockPuzzle)} on {name} has no door or opened door transform assigned.", this);
+            return;
+        }
+
+        Transform doorTransform = door.transform;
+        doorOpenTween?.Kill();
+        doorOpenTween = DOTween.Sequence()
+            .SetEase(doorOpenEase)
+            .SetUpdate(true)
+            .Join(doorTransform.DOMove(openedDoorTransform.position, doorOpenDuration))
+            .Join(doorTransform.DORotateQuaternion(openedDoorTransform.rotation, doorOpenDuration));
     }
 }
