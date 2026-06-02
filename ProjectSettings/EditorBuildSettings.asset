@@ -15,4 +15,5 @@ EditorBuildSettings:
     path: Assets/Scenes/Location_1_Bedroom.unity
     guid: 333743e9f814f6d488c951a7e965eda1
   m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: b10fac14575d6094b81358b94bce3956, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
