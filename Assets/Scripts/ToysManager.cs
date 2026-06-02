@@ -1,20 +1,18 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.Formats.Alembic.Importer;
 
 public sealed class ToysManager : MonoBehaviour
 {
     [SerializeField] private ToyPlace[] toyPlaces = new ToyPlace[3];
-    [SerializeField] private GameObject solvedObject;
-    [SerializeField] private bool hideSolvedObjectOnAwake = true;
+
+    [SerializeField] private AlembicStreamPlayer solvedAnimationPlayer;
+    [SerializeField] private bool activateAnimationObjectOnSolved = true;
+    [SerializeField] private bool rewindAnimationOnSolved = true;
+    [SerializeField, Min(0.01f)] private float animationPlaybackSpeed = 1f;
 
     private bool solved;
-
-    private void Awake()
-    {
-        if (hideSolvedObjectOnAwake && solvedObject != null)
-        {
-            solvedObject.SetActive(false);
-        }
-    }
+    private Coroutine solvedAnimationRoutine;
 
     private void OnEnable()
     {
@@ -25,6 +23,12 @@ public sealed class ToysManager : MonoBehaviour
     private void OnDisable()
     {
         UnsubscribePlaces();
+
+        if (solvedAnimationRoutine != null)
+        {
+            StopCoroutine(solvedAnimationRoutine);
+            solvedAnimationRoutine = null;
+        }
     }
 
     private void OnPlaceStateChanged(ToyPlace place)
@@ -40,11 +44,55 @@ public sealed class ToysManager : MonoBehaviour
         }
 
         solved = true;
+        PlaySolvedAnimation();
+    }
 
-        if (solvedObject != null)
+    private void PlaySolvedAnimation()
+    {
+        if (solvedAnimationPlayer == null)
         {
-            solvedObject.SetActive(true);
+            return;
         }
+
+        if (solvedAnimationRoutine != null)
+        {
+            StopCoroutine(solvedAnimationRoutine);
+        }
+
+        if (activateAnimationObjectOnSolved)
+        {
+            solvedAnimationPlayer.gameObject.SetActive(true);
+        }
+
+        solvedAnimationRoutine = StartCoroutine(PlaySolvedAnimationRoutine());
+    }
+
+    private IEnumerator PlaySolvedAnimationRoutine()
+    {
+        float time = rewindAnimationOnSolved ? 0f : solvedAnimationPlayer.CurrentTime;
+        float duration = solvedAnimationPlayer.Duration;
+
+        if (duration <= 0f || float.IsNaN(duration) || float.IsInfinity(duration))
+        {
+            solvedAnimationPlayer.UpdateImmediately(time);
+            solvedAnimationRoutine = null;
+            yield break;
+        }
+
+        while (time < duration)
+        {
+            solvedAnimationPlayer.UpdateImmediately(time);
+            time += Time.deltaTime * animationPlaybackSpeed;
+            yield return null;
+        }
+
+        solvedAnimationPlayer.UpdateImmediately(duration);
+        solvedAnimationRoutine = null;
+    }
+
+    private void OnValidate()
+    {
+        animationPlaybackSpeed = Mathf.Max(0.01f, animationPlaybackSpeed);
     }
 
     private bool AreAllPlacesSolved()
