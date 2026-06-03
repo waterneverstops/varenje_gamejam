@@ -124,6 +124,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4809237583456727913, guid: af6274102c683154fa9e1261a78fc984, type: 3}
   m_PrefabInstance: {fileID: 3992051007928179591}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &123175477 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8554682156487132597, guid: 94bd3102b69e76340bfb8f39c3c9692e, type: 3}
+  m_PrefabInstance: {fileID: 233154776}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &192857714
 GameObject:
   m_ObjectHideFlags: 0
@@ -553,7 +558,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 256357336052957389, guid: 94bd3102b69e76340bfb8f39c3c9692e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 255848492}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8554682156487132597, guid: 94bd3102b69e76340bfb8f39c3c9692e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1563129019}
   m_SourcePrefab: {fileID: 100100000, guid: 94bd3102b69e76340bfb8f39c3c9692e, type: 3}
 --- !u!1 &240558205
 GameObject:
@@ -2395,6 +2403,17 @@ Transform:
   - {fileID: 2147211351}
   m_Father: {fileID: 318265911}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1193953152 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5365726882735246084, guid: 05db4ded0e9e23346b4723af48b21980, type: 3}
+  m_PrefabInstance: {fileID: 910964787}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e165b6e695fd7c04d9f0dda20a9f3070, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerLight
 --- !u!1 &1200216634
 GameObject:
   m_ObjectHideFlags: 0
@@ -2877,6 +2896,22 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 256357336052957389, guid: 94bd3102b69e76340bfb8f39c3c9692e, type: 3}
   m_PrefabInstance: {fileID: 233154776}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1563129019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 123175477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5ccafff03344c21b20b27e0dd83cfcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerLightObjectToggle
+  playerLight: {fileID: 1193953152}
+  targetObject: {fileID: 255848491}
+  activeWhenLightOn: 0
+  autoFindPlayerLight: 1
 --- !u!1 &1576682916
 GameObject:
   m_ObjectHideFlags: 0
