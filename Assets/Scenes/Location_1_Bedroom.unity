@@ -3055,6 +3055,45 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4809237583456727913, guid: af6274102c683154fa9e1261a78fc984, type: 3}
   m_PrefabInstance: {fileID: 1604411145}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1709171024 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4381553848741862730, guid: 94bd3102b69e76340bfb8f39c3c9692e, type: 3}
+  m_PrefabInstance: {fileID: 7128004165355745630}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1709171028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1709171024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f1b4bdf0d854d44a9f9db80be4ed1b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AlbumPickup
+  hideWhenAlreadyCollected: 1
+--- !u!65 &1709171029
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1709171024}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.3, y: 0.1, z: 0.4}
+  m_Center: {x: 4.778817, y: 0.63, z: -0.810062}
 --- !u!1 &1814355913
 GameObject:
   m_ObjectHideFlags: 0
@@ -3903,7 +3942,13 @@ PrefabInstance:
     m_RemovedGameObjects:
     - {fileID: 2207770775676039677, guid: 94bd3102b69e76340bfb8f39c3c9692e, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4381553848741862730, guid: 94bd3102b69e76340bfb8f39c3c9692e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1709171028}
+    - targetCorrespondingSourceObject: {fileID: 4381553848741862730, guid: 94bd3102b69e76340bfb8f39c3c9692e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1709171029}
   m_SourcePrefab: {fileID: 100100000, guid: 94bd3102b69e76340bfb8f39c3c9692e, type: 3}
 --- !u!1001 &7610342219437396923
 PrefabInstance:

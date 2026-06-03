@@ -5,10 +5,16 @@ using UnityEngine;
 
 public sealed class PlayerStateManager : SingleBehaviour<PlayerStateManager>
 {
+    [Header("Collected Tools")]
+    [SerializeField] private bool hasAlbum;
+
     private readonly List<object> playerInputBlockers = new();
     private bool lastCanProcessPlayerInput = true;
 
+    public event Action AlbumCollected;
     public event Action<bool> PlayerInputAllowedChanged;
+
+    public bool HasAlbum => hasAlbum;
 
     public bool CanProcessPlayerInput {
         get {
@@ -23,6 +29,18 @@ public sealed class PlayerStateManager : SingleBehaviour<PlayerStateManager>
         {
             NotifyIfInputStateChanged();
         }
+    }
+
+    public bool CollectAlbum()
+    {
+        if (hasAlbum)
+        {
+            return false;
+        }
+
+        hasAlbum = true;
+        AlbumCollected?.Invoke();
+        return true;
     }
 
     public void BlockPlayerInput(object owner)

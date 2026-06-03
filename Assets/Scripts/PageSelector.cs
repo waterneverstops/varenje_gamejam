@@ -10,6 +10,11 @@ public class PageSelector : MonoBehaviour
 
     private void Update()
     {
+        if (!PlayerStateManager.Instance.HasAlbum)
+        {
+            return;
+        }
+
         if (Keyboard.current == null || !Keyboard.current.tabKey.wasPressedThisFrame)
         {
             return;
@@ -44,6 +49,11 @@ public class PageSelector : MonoBehaviour
 
     public void OpenAlbum()
     {
+        if (!PlayerStateManager.Instance.HasAlbum)
+        {
+            return;
+        }
+
         if (isOpen || album == null || pages == null || pages.Length == 0 || pages[0] == null)
         {
             return;
