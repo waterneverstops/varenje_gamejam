@@ -4012,21 +4012,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1251219914450947157, guid: dd4155357055fbe418a77a000cb85284, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2310965329256638996, guid: dd4155357055fbe418a77a000cb85284, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 2972482658775037690, guid: dd4155357055fbe418a77a000cb85284, type: 3}
       propertyPath: m_Name
       value: LevelUICanvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 2972482658775037690, guid: dd4155357055fbe418a77a000cb85284, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3655276978316283500, guid: dd4155357055fbe418a77a000cb85284, type: 3}
       propertyPath: m_Pivot.x
