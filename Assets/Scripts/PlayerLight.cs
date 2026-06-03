@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Random = UnityEngine.Random;
 
 public sealed class PlayerLight : MonoBehaviour, GameInputs.IPlayerActions
 {
@@ -36,6 +38,7 @@ public sealed class PlayerLight : MonoBehaviour, GameInputs.IPlayerActions
     public int ChargesRemaining => chargesRemaining;
     public int MaxCharges => maxCharges;
     public bool IsLightOn => targetLight != null && targetLight.enabled;
+    public event Action<int, int> ChargesChanged;
 
     private void Reset()
     {
@@ -54,6 +57,7 @@ public sealed class PlayerLight : MonoBehaviour, GameInputs.IPlayerActions
 
         ApplyChargeColor();
         SetLightEnabled(startEnabled && chargesRemaining > 0);
+        NotifyChargesChanged();
     }
 
     private void OnEnable()
@@ -111,6 +115,7 @@ public sealed class PlayerLight : MonoBehaviour, GameInputs.IPlayerActions
 
         chargesRemaining--;
         ApplyChargeColor();
+        NotifyChargesChanged();
 
         startupRoutine = StartCoroutine(StartLightAfterFlicker(startupDelay));
     }
@@ -209,6 +214,11 @@ public sealed class PlayerLight : MonoBehaviour, GameInputs.IPlayerActions
 
         float chargeRatio = maxCharges > 0 ? chargesRemaining / (float)maxCharges : 0f;
         targetLight.color = Color.Lerp(emptyChargeColor, fullChargeColor, chargeRatio);
+    }
+
+    private void NotifyChargesChanged()
+    {
+        ChargesChanged?.Invoke(chargesRemaining, maxCharges);
     }
 
     private void StopLightRoutines()
