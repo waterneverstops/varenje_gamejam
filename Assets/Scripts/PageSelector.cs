@@ -4,9 +4,16 @@ using UnityEngine.InputSystem;
 public class PageSelector : MonoBehaviour
 {
     public GameObject album;
+    public GameObject[] albumHints;
     public GameObject[] pages = new GameObject[4];
     public GameObject activePage = null;
     private bool isOpen = false;
+
+    private void OnEnable()
+    {
+        PlayerStateManager.Instance.AlbumCollected += UpdateAlbumHintVisibility;
+        UpdateAlbumHintVisibility();
+    }
 
     private void Update()
     {
@@ -36,6 +43,11 @@ public class PageSelector : MonoBehaviour
 
     private void OnDisable()
     {
+        if (PlayerStateManager.HasInstance)
+        {
+            PlayerStateManager.Instance.AlbumCollected -= UpdateAlbumHintVisibility;
+        }
+
         if (isOpen)
         {
             CloseAlbum();
@@ -44,6 +56,24 @@ public class PageSelector : MonoBehaviour
         if (EscapeButtonManager.HasInstance)
         {
             EscapeButtonManager.Instance.UnregisterWindow(this);
+        }
+    }
+
+    private void UpdateAlbumHintVisibility()
+    {
+        bool shouldShowAlbumHint = PlayerStateManager.Instance.HasAlbum;
+
+        if (albumHints == null)
+        {
+            return;
+        }
+
+        foreach (GameObject albumHint in albumHints)
+        {
+            if (albumHint != null)
+            {
+                albumHint.SetActive(shouldShowAlbumHint);
+            }
         }
     }
 

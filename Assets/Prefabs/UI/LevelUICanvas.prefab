@@ -6140,6 +6140,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PageSelector
   album: {fileID: 762209811395332441}
+  albumHints:
+  - {fileID: 5606594759217793363}
+  - {fileID: 6633205886427034289}
   pages:
   - {fileID: 6358270295321984553}
   - {fileID: 3286029498374514780}
@@ -10479,7 +10482,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2881557267251024220
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12529,7 +12532,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8123498655153740899
 RectTransform:
   m_ObjectHideFlags: 0
