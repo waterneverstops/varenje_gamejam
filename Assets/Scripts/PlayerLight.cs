@@ -12,6 +12,9 @@ public sealed class PlayerLight : MonoBehaviour, GameInputs.IPlayerActions
     [Header("Charges")]
     [SerializeField, Min(0)] private int maxCharges = 5;
 
+    [Header("Album IDs")]
+    [SerializeField] private string lightOffAlbumId = "light";
+
     [Header("Charge Color")]
     [SerializeField] private Color fullChargeColor = Color.white;
     [SerializeField] private Color emptyChargeColor = new Color(1f, 0.45f, 0f);
@@ -96,6 +99,7 @@ public sealed class PlayerLight : MonoBehaviour, GameInputs.IPlayerActions
         {
             StopStartupRoutine();
             SetLightEnabled(false);
+            CollectLightOffAlbumId();
             return;
         }
 
@@ -219,6 +223,11 @@ public sealed class PlayerLight : MonoBehaviour, GameInputs.IPlayerActions
     private void NotifyChargesChanged()
     {
         ChargesChanged?.Invoke(chargesRemaining, maxCharges);
+    }
+
+    private void CollectLightOffAlbumId()
+    {
+        AlbumManager.Instance.CollectId(lightOffAlbumId);
     }
 
     private void StopLightRoutines()
