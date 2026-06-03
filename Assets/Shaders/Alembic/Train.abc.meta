@@ -1,7 +1,43 @@
 fileFormatVersion: 2
 guid: 4fc5f7f5164834e4297d770e7d57374a
-DefaultImporter:
-  externalObjects: {}
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 'Train/TrainShape:000:'
+    second: {fileID: 2100000, guid: 753caff5961072649a130805d1a75b21, type: 2}
+  serializedVersion: 2
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+  script: {fileID: 11500000, guid: f53f5fc499d31e44b9deee84d28a9ee8, type: 3}
+  rootGameObjectId: 
+  rootGameObjectName: 
+  importerVersion: 1
+  streamSettings:
+    normals: 1
+    tangents: 1
+    cameraAspectRatio: 2
+    importVisibility: 1
+    scaleFactor: 0.01
+    swapHandedness: 1
+    flipFaces: 0
+    interpolateSamples: 1
+    importPointPolygon: 1
+    importLinePolygon: 1
+    importTrianglePolygon: 1
+    importXform: 1
+    importCameras: 1
+    importMeshes: 1
+    importPoints: 0
+    importCurves: 1
+    createCurveRenderers: 0
+  abcStartTime: 23.75
+  abcEndTime: 33.33333333333333
+  startTime: 23.75
+  endTime: 33.33333333333333
+  importWarning: 
+  firstImport: 0
+  isHDF5: 0
