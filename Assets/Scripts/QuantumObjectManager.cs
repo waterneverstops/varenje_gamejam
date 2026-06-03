@@ -12,6 +12,9 @@ public sealed class QuantumObjectManager : MonoBehaviour
     [SerializeField] private LayerMask darknessLightLayers = ~0;
     [SerializeField] private Light[] trackedDarknessLights = new Light[0];
 
+    [Header("Album Lock")]
+    [SerializeField] private string disableTeleportingAlbumId = "first_puzzle";
+
     private static QuantumObjectManager instance;
 
     private readonly Dictionary<string, QuantumGroup> groups = new Dictionary<string, QuantumGroup>();
@@ -20,6 +23,7 @@ public sealed class QuantumObjectManager : MonoBehaviour
     private readonly List<int> candidateBuffer = new List<int>(16);
     private readonly Plane[] frustumPlanes = new Plane[6];
     private float nextCheckTime;
+    private bool teleportingDisabled;
 
     public static bool HasInstance => instance != null;
 
@@ -53,8 +57,19 @@ public sealed class QuantumObjectManager : MonoBehaviour
         instance = this;
     }
 
+    private void Start()
+    {
+        AlbumManager.Instance.IdCollected += OnAlbumIdCollected;
+        RefreshTeleportingDisabledState();
+    }
+
     private void OnDestroy()
     {
+        if (AlbumManager.HasInstance)
+        {
+            AlbumManager.Instance.IdCollected -= OnAlbumIdCollected;
+        }
+
         if (instance == this)
         {
             instance = null;
@@ -63,6 +78,11 @@ public sealed class QuantumObjectManager : MonoBehaviour
 
     private void Update()
     {
+        if (teleportingDisabled)
+        {
+            return;
+        }
+
         if (Time.time < nextCheckTime)
         {
             return;
@@ -142,6 +162,11 @@ public sealed class QuantumObjectManager : MonoBehaviour
 
     public bool TryJump(string id)
     {
+        if (teleportingDisabled)
+        {
+            return false;
+        }
+
         if (!groups.TryGetValue(id, out QuantumGroup group))
         {
             return false;
@@ -360,6 +385,19 @@ public sealed class QuantumObjectManager : MonoBehaviour
                 quantumObject.SetMaterialized(i == group.ActiveIndex);
             }
         }
+    }
+
+    private void OnAlbumIdCollected(string id)
+    {
+        if (id == disableTeleportingAlbumId)
+        {
+            teleportingDisabled = true;
+        }
+    }
+
+    private void RefreshTeleportingDisabledState()
+    {
+        teleportingDisabled = AlbumManager.Instance.HasId(disableTeleportingAlbumId);
     }
 
     private sealed class QuantumGroup
