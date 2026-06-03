@@ -16,7 +16,6 @@ public sealed class PlayerPanicController : MonoBehaviour
     [SerializeField] private bool pauseTimeOnLoss = true;
     [SerializeField] private bool showCursorOnLoss = true;
 
-    private Color panicEffectColor;
     private float panic;
     private bool lossShown;
 
@@ -36,7 +35,6 @@ public sealed class PlayerPanicController : MonoBehaviour
 
         if (panicEffectImage != null)
         {
-            panicEffectColor = panicEffectImage.color;
             panicEffectImage.raycastTarget = false;
         }
 
@@ -100,7 +98,7 @@ public sealed class PlayerPanicController : MonoBehaviour
         }
 
         float intensity = Mathf.SmoothStep(0f, 1f, panic);
-        Color color = panicEffectColor;
+        Color color = Color.white;
         color.a *= intensity;
         panicEffectImage.color = color;
 
