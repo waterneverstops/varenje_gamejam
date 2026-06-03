@@ -4046,6 +4046,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6645473594739942851, guid: dd4155357055fbe418a77a000cb85284, type: 3}
+      propertyPath: playerLight
+      value: 
+      objectReference: {fileID: 1193953152}
+    - target: {fileID: 6645473594739942851, guid: dd4155357055fbe418a77a000cb85284, type: 3}
+      propertyPath: recoveryTime
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6645473594739942851, guid: dd4155357055fbe418a77a000cb85284, type: 3}
+      propertyPath: timeToFullPanic
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 6929021553658163389, guid: dd4155357055fbe418a77a000cb85284, type: 3}
       propertyPath: m_IsActive
       value: 1
