@@ -5,6 +5,7 @@ public sealed class AlbumPickup : Interactable
     [SerializeField] private bool hideWhenAlreadyCollected = true;
 
     public override bool CanInteract => base.CanInteract && !PlayerStateManager.Instance.HasAlbum;
+    public override InteractableHoverHintType HoverHintType => InteractableHoverHintType.AlbumAndCards;
 
     private void OnEnable()
     {

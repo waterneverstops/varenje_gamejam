@@ -7,6 +7,10 @@ public sealed class PlayerInteractionManager : MonoBehaviour, GameInputs.IPlayer
     [SerializeField] private Camera playerCamera;
     [SerializeField] private GameObject interactionMarker;
 
+    [Header("Hover Hints")]
+    [SerializeField] private GameObject albumAndCardsHoverHint;
+    [SerializeField] private GameObject lockPuzzleHoverHint;
+
     [Header("Interaction")]
     [SerializeField, Min(0.1f)] private float interactionDistance = 3f;
     [SerializeField] private LayerMask interactionMask = ~0;
@@ -26,7 +30,7 @@ public sealed class PlayerInteractionManager : MonoBehaviour, GameInputs.IPlayer
     private void Awake()
     {
         EnsureCamera();
-        SetMarkerVisible(false);
+        SetAllHoverHintsVisible(false);
     }
 
     private void OnEnable()
@@ -43,16 +47,14 @@ public sealed class PlayerInteractionManager : MonoBehaviour, GameInputs.IPlayer
         }
 
         subscribedToInput = false;
-        currentInteractable = null;
-        SetMarkerVisible(false);
+        SetCurrentInteractable(null);
     }
 
     private void Update()
     {
         if (!PlayerStateManager.Instance.CanProcessPlayerInput)
         {
-            currentInteractable = null;
-            SetMarkerVisible(false);
+            SetCurrentInteractable(null);
             return;
         }
 
@@ -87,8 +89,7 @@ public sealed class PlayerInteractionManager : MonoBehaviour, GameInputs.IPlayer
 
     private void RefreshCurrentInteractable()
     {
-        currentInteractable = FindViewedInteractable();
-        SetMarkerVisible(currentInteractable != null);
+        SetCurrentInteractable(FindViewedInteractable());
     }
 
     private Interactable FindViewedInteractable()
@@ -130,12 +131,45 @@ public sealed class PlayerInteractionManager : MonoBehaviour, GameInputs.IPlayer
         }
     }
 
-    private void SetMarkerVisible(bool visible)
+    private void SetCurrentInteractable(Interactable interactable)
     {
-        if (interactionMarker != null && interactionMarker.activeSelf != visible)
+        if (currentInteractable == interactable)
         {
-            interactionMarker.SetActive(visible);
+            return;
         }
+
+        if (currentInteractable != null)
+        {
+            SetHoverHintVisible(currentInteractable.HoverHintType, false);
+        }
+
+        currentInteractable = interactable;
+
+        if (currentInteractable != null)
+        {
+            SetHoverHintVisible(currentInteractable.HoverHintType, true);
+        }
+    }
+
+    private void SetHoverHintVisible(InteractableHoverHintType hintType, bool visible)
+    {
+        GameObject hint = hintType switch
+        {
+            InteractableHoverHintType.AlbumAndCards => albumAndCardsHoverHint,
+            InteractableHoverHintType.LockPuzzle => lockPuzzleHoverHint,
+            _ => null
+        };
+
+        if (hint != null && hint.activeSelf != visible)
+        {
+            hint.SetActive(visible);
+        }
+    }
+
+    private void SetAllHoverHintsVisible(bool visible)
+    {
+        SetHoverHintVisible(InteractableHoverHintType.AlbumAndCards, visible);
+        SetHoverHintVisible(InteractableHoverHintType.LockPuzzle, visible);
     }
 
     private void OnValidate()

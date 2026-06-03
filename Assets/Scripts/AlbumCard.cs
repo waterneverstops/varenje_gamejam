@@ -5,6 +5,7 @@ public sealed class AlbumCard : Interactable
     [SerializeField] private string id = "Card";
 
     public string Id => id;
+    public override InteractableHoverHintType HoverHintType => InteractableHoverHintType.AlbumAndCards;
 
     private void Reset()
     {

@@ -16,6 +16,7 @@ public sealed class PlayerGrabbing : MonoBehaviour, GameInputs.IPlayerActions
     [Header("References")]
     [SerializeField] private Transform grabOrigin;
     [SerializeField] private LineRenderer lineRenderer;
+    [SerializeField] private GameObject draggableHoverHint;
 
     [Header("Grab")]
     [SerializeField, Range(4f, 50f)] private float grabSpeed = 7f;
@@ -32,6 +33,7 @@ public sealed class PlayerGrabbing : MonoBehaviour, GameInputs.IPlayerActions
     private float holdDistance;
     private bool heldBodyHasHinge;
     private bool subscribedToInput;
+    private Rigidbody hoveredBody;
 
     public Rigidbody HeldBody => heldBody;
     public bool IsHolding => heldBody != null;
@@ -57,6 +59,7 @@ public sealed class PlayerGrabbing : MonoBehaviour, GameInputs.IPlayerActions
         anchorObject = new GameObject("Grab Anchor");
         anchorObject.hideFlags = HideFlags.HideInHierarchy;
         SetLineVisible(false);
+        SetDraggableHoverHintVisible(false);
     }
 
     private void OnEnable()
@@ -75,6 +78,7 @@ public sealed class PlayerGrabbing : MonoBehaviour, GameInputs.IPlayerActions
         }
 
         subscribedToInput = false;
+        SetHoveredBody(null);
     }
 
     private void OnDestroy()
@@ -106,6 +110,11 @@ public sealed class PlayerGrabbing : MonoBehaviour, GameInputs.IPlayerActions
         }
 
         DrawGrabLine(targetPosition, anchorPosition);
+    }
+
+    private void Update()
+    {
+        RefreshHoveredBody();
     }
 
     public void OnInteract(InputAction.CallbackContext context)
@@ -192,23 +201,12 @@ public sealed class PlayerGrabbing : MonoBehaviour, GameInputs.IPlayerActions
 
     private void TryGrab()
     {
-        if (!Physics.Raycast(grabOrigin.position, grabOrigin.forward, out RaycastHit hit, grabMaxDistance, collisionMask, QueryTriggerInteraction.Ignore))
+        if (!TryFindViewedGrabbableBody(true, out Rigidbody hitBody, out float distance, out Vector3 hitPoint))
         {
             return;
         }
 
-        Rigidbody hitBody = hit.rigidbody;
-        if (hitBody == null)
-        {
-            hitBody = hit.collider.GetComponentInParent<Rigidbody>();
-        }
-
-        if (hitBody == null || hitBody.isKinematic)
-        {
-            return;
-        }
-
-        StartHolding(hitBody, hit.distance, hit.point);
+        StartHolding(hitBody, distance, hitPoint);
     }
 
     private void StartHolding(Rigidbody target, float distance, Vector3 hitPoint)
@@ -267,6 +265,81 @@ public sealed class PlayerGrabbing : MonoBehaviour, GameInputs.IPlayerActions
         if (lineRenderer != null)
         {
             lineRenderer.enabled = visible;
+        }
+    }
+
+    private void RefreshHoveredBody()
+    {
+        if (IsHolding || !PlayerStateManager.Instance.CanProcessPlayerInput)
+        {
+            SetHoveredBody(null);
+            return;
+        }
+
+        if (!TryFindViewedGrabbableBody(false, out Rigidbody body, out _, out _))
+        {
+            SetHoveredBody(null);
+            return;
+        }
+
+        SetHoveredBody(body);
+    }
+
+    private bool TryFindViewedGrabbableBody(bool allowInteractables, out Rigidbody body, out float distance, out Vector3 hitPoint)
+    {
+        body = null;
+        distance = 0f;
+        hitPoint = Vector3.zero;
+
+        if (grabOrigin == null)
+        {
+            return false;
+        }
+
+        if (!Physics.Raycast(grabOrigin.position, grabOrigin.forward, out RaycastHit hit, grabMaxDistance, collisionMask, QueryTriggerInteraction.Ignore))
+        {
+            return false;
+        }
+
+        body = hit.rigidbody;
+        if (body == null)
+        {
+            body = hit.collider.GetComponentInParent<Rigidbody>();
+        }
+
+        if (body == null || body.isKinematic)
+        {
+            body = null;
+            return false;
+        }
+
+        if (!allowInteractables && hit.collider.GetComponentInParent<Interactable>() != null)
+        {
+            body = null;
+            return false;
+        }
+
+        distance = hit.distance;
+        hitPoint = hit.point;
+        return true;
+    }
+
+    private void SetHoveredBody(Rigidbody body)
+    {
+        if (hoveredBody == body)
+        {
+            return;
+        }
+
+        hoveredBody = body;
+        SetDraggableHoverHintVisible(hoveredBody != null);
+    }
+
+    private void SetDraggableHoverHintVisible(bool visible)
+    {
+        if (draggableHoverHint != null && draggableHoverHint.activeSelf != visible)
+        {
+            draggableHoverHint.SetActive(visible);
         }
     }
 
