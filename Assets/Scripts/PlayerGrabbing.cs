@@ -313,6 +313,13 @@ public sealed class PlayerGrabbing : MonoBehaviour, GameInputs.IPlayerActions
             return false;
         }
 
+        QuantumObject quantumObject = hit.collider.GetComponentInParent<QuantumObject>();
+        if (quantumObject != null && !quantumObject.IsMaterialized)
+        {
+            body = null;
+            return false;
+        }
+
         if (!allowInteractables && hit.collider.GetComponentInParent<Interactable>() != null)
         {
             body = null;
