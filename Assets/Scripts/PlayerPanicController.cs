@@ -12,12 +12,17 @@ public sealed class PlayerPanicController : MonoBehaviour
     [SerializeField, Min(0.01f)] private float timeToFullPanic = 20f;
     [SerializeField, Min(0.01f)] private float recoveryTime = 8f;
 
+    [Header("Album IDs")]
+    [SerializeField] private string panicAlbumId = "panic";
+    [SerializeField, Range(0f, 1f)] private float panicAlbumThreshold = 0.2f;
+
     [Header("Loss")]
     [SerializeField] private bool pauseTimeOnLoss = true;
     [SerializeField] private bool showCursorOnLoss = true;
 
     private float panic;
     private bool lossShown;
+    private bool panicAlbumIdCollected;
 
     public float Panic => panic;
     public bool IsLossShown => lossShown;
@@ -75,6 +80,7 @@ public sealed class PlayerPanicController : MonoBehaviour
 
         ResolvePlayerLight();
         TickPanic(Time.deltaTime);
+        TryCollectPanicAlbumId();
         ApplyPanicEffect();
 
         if (panic >= 1f)
@@ -108,6 +114,17 @@ public sealed class PlayerPanicController : MonoBehaviour
         {
             effectObject.SetActive(shouldBeActive);
         }
+    }
+
+    private void TryCollectPanicAlbumId()
+    {
+        if (panicAlbumIdCollected || panic < panicAlbumThreshold)
+        {
+            return;
+        }
+
+        panicAlbumIdCollected = true;
+        AlbumManager.Instance.CollectId(panicAlbumId);
     }
 
     private void ShowLoss()
@@ -217,5 +234,6 @@ public sealed class PlayerPanicController : MonoBehaviour
     {
         timeToFullPanic = Mathf.Max(0.01f, timeToFullPanic);
         recoveryTime = Mathf.Max(0.01f, recoveryTime);
+        panicAlbumThreshold = Mathf.Clamp01(panicAlbumThreshold);
     }
 }

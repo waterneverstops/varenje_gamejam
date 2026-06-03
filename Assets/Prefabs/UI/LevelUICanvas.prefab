@@ -2187,7 +2187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a3ed68f038d4984ab1913ba1a601904, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AlbumIdComponentToggle
-  id: Light
+  id: light
   activeWhenIdExists: 1
 --- !u!1 &819931830534316898
 GameObject:
@@ -3064,7 +3064,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a3ed68f038d4984ab1913ba1a601904, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AlbumIdComponentToggle
-  id: Panic
+  id: panic
   activeWhenIdExists: 1
 --- !u!1 &1212181577489591052
 GameObject:
