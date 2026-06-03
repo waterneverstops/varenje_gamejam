@@ -6140,9 +6140,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PageSelector
   album: {fileID: 762209811395332441}
-  albumHints:
-  - {fileID: 5606594759217793363}
-  - {fileID: 6633205886427034289}
+  albumHints: []
   pages:
   - {fileID: 6358270295321984553}
   - {fileID: 3286029498374514780}
@@ -14310,7 +14308,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0423\u0440\u0430"
+  m_text: "\u0414\u0432\u0435\u0440\u044C\n\u043E\u0442\u043A\u0440\u044B\u0442\u0430"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: bc38e70b2628b6d4ba182d42190403fe, type: 2}
   m_sharedMaterial: {fileID: -6803944467600544235, guid: bc38e70b2628b6d4ba182d42190403fe, type: 2}
@@ -16572,7 +16570,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0412\u044B\n\u043F\u043E\u0433\u0438\u0431\u043B\u0438"
+  m_text: "\u0422\u0435\u043C\u043D\u043E\u0442\u0430\n\u043E\u043A\u0430\u0437\u0430\u043B\u0430\u0441\u044C\n\u0441\u043B\u0438\u0448\u043A\u043E\u043C\n\u0442\u044F\u0436\u0435\u043B\u043E\u0439"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: bc38e70b2628b6d4ba182d42190403fe, type: 2}
   m_sharedMaterial: {fileID: -6803944467600544235, guid: bc38e70b2628b6d4ba182d42190403fe, type: 2}
