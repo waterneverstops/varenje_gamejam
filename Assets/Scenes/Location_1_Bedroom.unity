@@ -6825,7 +6825,7 @@ MonoBehaviour:
   ignoreHeight: 1
   enterAngleTolerance: 18
   exitAngleTolerance: 26
-  holdDuration: 4
+  holdDuration: 2
   progressDrainSpeed: 1.6
   solveOnce: 1
   requirePlayerInputAllowed: 1
