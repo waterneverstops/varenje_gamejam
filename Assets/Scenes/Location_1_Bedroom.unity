@@ -661,6 +661,78 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.06855893, y: 0.0027131964, z: 0.07746212}
   m_Center: {x: -0.034279466, y: 0.0013565964, z: 0.038731057}
+--- !u!1 &226009260
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 226009263}
+  - component: {fileID: 226009262}
+  - component: {fileID: 226009261}
+  m_Layer: 0
+  m_Name: ScrejetCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &226009261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 226009260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4d27eeded32ffb448c8baeda3233845, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CabinetCreakTrigger
+  lockPuzzle: {fileID: 7128004165355745633}
+  playerTag: Player
+  cooldown: 10
+  creakIds:
+  - Skrezhet1
+  - Skrezhet2
+--- !u!65 &226009262
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 226009260}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 4.0500255, y: 1, z: 0.57568645}
+  m_Center: {x: 0.42560124, y: 0, z: 0.21215677}
+--- !u!4 &226009263
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 226009260}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.19454, y: 0.20244, z: 3.48026}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &226910694 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -863684195548078362, guid: 62d9fe89d7ee8b740969aa93c58426ff, type: 3}
@@ -12475,7 +12547,7 @@ Transform:
   m_GameObject: {fileID: 1596595238}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -9.15811, y: 0.074, z: -11.84801}
+  m_LocalPosition: {x: -9.15811, y: 0.075, z: -11.84801}
   m_LocalScale: {x: 0.19830708, y: 0.19830708, z: 0.12229497}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -14962,6 +15034,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 256357336052957389, guid: 94bd3102b69e76340bfb8f39c3c9692e, type: 3}
   m_PrefabInstance: {fileID: 7128004165355745630}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7128004165355745633 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2223221083140951163, guid: 94bd3102b69e76340bfb8f39c3c9692e, type: 3}
+  m_PrefabInstance: {fileID: 7128004165355745630}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e3d9ea5ad15ded429997c358e8b867e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LockPuzzle
 --- !u!1001 &7610342219437396923
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15244,3 +15327,4 @@ SceneRoots:
   - {fileID: 308902532}
   - {fileID: 2108451090}
   - {fileID: 271220082}
+  - {fileID: 226009263}
