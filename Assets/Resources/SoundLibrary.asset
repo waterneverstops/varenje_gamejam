@@ -75,7 +75,7 @@ MonoBehaviour:
     loop: 0
   - id: Turning_Page_Open_Book
     type: 0
-    clip: {fileID: 8300000, guid: 77355cc8401613d4a9d9bce77586b055, type: 3}
+    clip: {fileID: 8300000, guid: 4a7e305e871434b4c9fa078fc155d4a3, type: 3}
     volume: 0.725
     pitch: 1
     loop: 0
