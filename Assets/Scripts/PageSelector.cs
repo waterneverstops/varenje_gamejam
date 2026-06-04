@@ -9,6 +9,10 @@ public class PageSelector : MonoBehaviour
     public GameObject activePage = null;
     private bool isOpen = false;
 
+    [Header("Sound")]
+    [SerializeField, SoundId(SoundType.Sound)] private string openSoundId = "Turning_Page_Open_Book";
+    [SerializeField, SoundId(SoundType.Sound)] private string pageTurnSoundId = "Turning_Page_Open_Book";
+
     private void OnEnable()
     {
         PlayerStateManager.Instance.AlbumCollected += UpdateAlbumHintVisibility;
@@ -96,6 +100,11 @@ public class PageSelector : MonoBehaviour
         album.SetActive(true);
         activePage.SetActive(true);
 
+        if (!string.IsNullOrEmpty(openSoundId))
+        {
+            SoundManager.PlaySound(openSoundId);
+        }
+
         if (PlayerStateManager.HasInstance)
         {
             PlayerStateManager.Instance.BlockPlayerInput(this);
@@ -144,11 +153,16 @@ public class PageSelector : MonoBehaviour
             return;
         }
 
-        if (pages != null && pageIndex >= 0 && pageIndex < pages.Length && pages[pageIndex] != null)
+        if (pages != null && pageIndex >= 0 && pageIndex < pages.Length && pages[pageIndex] != null && pages[pageIndex] != activePage)
         {
             activePage.SetActive(false);
             activePage = pages[pageIndex];
             activePage.SetActive(true);
+
+            if (!string.IsNullOrEmpty(pageTurnSoundId))
+            {
+                SoundManager.PlaySound(pageTurnSoundId);
+            }
         }
     }
 }

@@ -9,6 +9,8 @@ public sealed class LockReel : MonoBehaviour
     [SerializeField] private TMP_Text digitText;
     [SerializeField, Range(0, 9)] private int currentDigit;
 
+    [SerializeField, SoundId(SoundType.Sound)] private string clickSoundId = "Lock_Click_Digits";
+
     public int CurrentDigit => currentDigit;
 
     private void OnEnable()
@@ -48,11 +50,21 @@ public sealed class LockReel : MonoBehaviour
     private void Increment()
     {
         SetDigit(currentDigit + 1);
+        PlayClickSound();
     }
 
     private void Decrement()
     {
         SetDigit(currentDigit - 1);
+        PlayClickSound();
+    }
+
+    private void PlayClickSound()
+    {
+        if (!string.IsNullOrEmpty(clickSoundId))
+        {
+            SoundManager.PlaySound(clickSoundId);
+        }
     }
 
     private void RefreshText()

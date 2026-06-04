@@ -6326,6 +6326,7 @@ MonoBehaviour:
   activateAnimationObjectOnSolved: 1
   rewindAnimationOnSolved: 1
   animationPlaybackSpeed: 1
+  solvedSoundId: Cho-choo
 --- !u!114 &467130071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6345,6 +6346,7 @@ MonoBehaviour:
   flashFadeInEase: 3
   flashFadeOutEase: 2
   useUnscaledFlashTime: 1
+  collectSoundId: Pen_Writing_Book
 --- !u!1 &512010069
 GameObject:
   m_ObjectHideFlags: 0
@@ -7268,6 +7270,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 6998550588068157674, guid: 05db4ded0e9e23346b4723af48b21980, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7597,6 +7603,78 @@ Transform:
   - {fileID: 2147211351}
   m_Father: {fileID: 318265911}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1184091569
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1184091571}
+  - component: {fileID: 1184091570}
+  - component: {fileID: 1184091572}
+  m_Layer: 0
+  m_Name: SkrejetCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &1184091570
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1184091569}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 4.543268, y: 1, z: 1.4375694}
+  m_Center: {x: 0.18892908, y: 0, z: -0.21878469}
+--- !u!4 &1184091571
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1184091569}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.44133, y: 0.70009, z: 3.583}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1184091572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1184091569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4d27eeded32ffb448c8baeda3233845, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CabinetCreakTrigger
+  lockPuzzle: {fileID: 7128004165355745632}
+  playerTag: Player
+  cooldown: 10
+  creakIds:
+  - Skrezhet1
+  - Skrezhet2
 --- !u!114 &1193953152 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5365726882735246084, guid: 05db4ded0e9e23346b4723af48b21980, type: 3}
@@ -8605,6 +8683,55 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6010697916342109129, guid: dd4155357055fbe418a77a000cb85284, type: 3}
   m_PrefabInstance: {fileID: 7610342219437396923}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1732939836
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1732939838}
+  - component: {fileID: 1732939837}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1732939837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1732939836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0743469a95d24fc99b2439ef8e1364c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SoundManager
+  library: {fileID: 11400000, guid: db01ef1e947f412aa8f2c7edc30bd4c7, type: 2}
+  soundSource: {fileID: 0}
+  musicSource: {fileID: 0}
+  soundVolume: 1
+  musicVolume: 1
+--- !u!4 &1732939838
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1732939836}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.09829, y: 0.72545, z: 0.04693}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1814355913
 GameObject:
   m_ObjectHideFlags: 0
@@ -9575,6 +9702,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4000806902864889840, guid: 94bd3102b69e76340bfb8f39c3c9692e, type: 3}
   m_PrefabInstance: {fileID: 7128004165355745630}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7128004165355745632 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2223221083140951163, guid: 94bd3102b69e76340bfb8f39c3c9692e, type: 3}
+  m_PrefabInstance: {fileID: 7128004165355745630}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e3d9ea5ad15ded429997c358e8b867e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LockPuzzle
 --- !u!1001 &7610342219437396923
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9739,6 +9877,10 @@ PrefabInstance:
       propertyPath: m_Color.a
       value: 0.011764706
       objectReference: {fileID: 0}
+    - target: {fileID: 7360936465092111213, guid: dd4155357055fbe418a77a000cb85284, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7479289380744420578, guid: dd4155357055fbe418a77a000cb85284, type: 3}
       propertyPath: albumHints.Array.size
       value: 1
@@ -9852,3 +9994,5 @@ SceneRoots:
   - {fileID: 267318151}
   - {fileID: 308902532}
   - {fileID: 2108451090}
+  - {fileID: 1732939838}
+  - {fileID: 1184091571}
