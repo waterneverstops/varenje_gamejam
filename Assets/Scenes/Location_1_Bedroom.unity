@@ -10393,6 +10393,10 @@ PrefabInstance:
       propertyPath: draggableHoverHint
       value: 
       objectReference: {fileID: 1678653211}
+    - target: {fileID: 5365726882735246084, guid: 05db4ded0e9e23346b4723af48b21980, type: 3}
+      propertyPath: maxCharges
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 6325347775014586034, guid: 05db4ded0e9e23346b4723af48b21980, type: 3}
       propertyPath: m_ClearFlags
       value: 1
