@@ -19,6 +19,14 @@ public sealed class WhisperPlayer : MonoBehaviour
     };
 
     private Coroutine routine;
+    private AudioSource whisperSource;
+
+    private void Awake()
+    {
+        whisperSource = gameObject.AddComponent<AudioSource>();
+        whisperSource.playOnAwake = false;
+        whisperSource.spatialBlend = 0f;
+    }
 
     private void OnEnable()
     {
@@ -42,9 +50,21 @@ public sealed class WhisperPlayer : MonoBehaviour
             float wait = Random.Range(minInterval, maxInterval);
             yield return new WaitForSeconds(wait);
 
-            if (CanPlayWhisper())
+            if (!CanPlayWhisper())
             {
-                PlayRandomWhisper();
+                continue;
+            }
+
+            PlayRandomWhisper();
+
+            while (whisperSource.isPlaying)
+            {
+                if (playerLight != null && playerLight.IsLightOn)
+                {
+                    whisperSource.Stop();
+                    break;
+                }
+                yield return null;
             }
         }
     }
@@ -67,9 +87,16 @@ public sealed class WhisperPlayer : MonoBehaviour
     private void PlayRandomWhisper()
     {
         string id = whisperIds[Random.Range(0, whisperIds.Length)];
-        if (!string.IsNullOrEmpty(id))
+        if (string.IsNullOrEmpty(id))
         {
-            SoundManager.PlaySound(id);
+            return;
+        }
+
+        SoundLibrary library = SoundManager.HasInstance ? SoundManager.Instance.Library : null;
+        if (library != null && library.TryGetEntry(id, SoundType.Sound, out SoundEntry entry) && entry.Clip != null)
+        {
+            whisperSource.pitch = entry.Pitch;
+            whisperSource.PlayOneShot(entry.Clip, entry.Volume);
         }
     }
 

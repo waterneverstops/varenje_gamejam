@@ -20,6 +20,7 @@ public sealed class LockWindowController : MonoBehaviour
 
     [Header("Sound")]
     [SerializeField, SoundId(SoundType.Sound)] private string openSoundId = "Lock_Open";
+    [SerializeField, SoundId(SoundType.Sound)] private string failSoundId = "UI";
 
     private Action solvedCallback;
     private Action closedCallback;
@@ -90,10 +91,16 @@ public sealed class LockWindowController : MonoBehaviour
             return;
         }
 
-        if (firstReel.CurrentDigit != firstDigit ||
-            secondReel.CurrentDigit != secondDigit ||
-            thirdReel.CurrentDigit != thirdDigit)
+        bool correct = firstReel.CurrentDigit == firstDigit &&
+                       secondReel.CurrentDigit == secondDigit &&
+                       thirdReel.CurrentDigit == thirdDigit;
+
+        if (!correct)
         {
+            if (!string.IsNullOrEmpty(failSoundId))
+            {
+                SoundManager.PlayUISound(failSoundId);
+            }
             return;
         }
 

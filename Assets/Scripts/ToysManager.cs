@@ -16,6 +16,14 @@ public sealed class ToysManager : MonoBehaviour
 
     private bool solved;
     private Coroutine solvedAnimationRoutine;
+    private AudioSource toysSoundSource;
+
+    private void Awake()
+    {
+        toysSoundSource = gameObject.AddComponent<AudioSource>();
+        toysSoundSource.playOnAwake = false;
+        toysSoundSource.spatialBlend = 0f;
+    }
 
     private void OnEnable()
     {
@@ -26,6 +34,7 @@ public sealed class ToysManager : MonoBehaviour
     private void OnDisable()
     {
         UnsubscribePlaces();
+        toysSoundSource.Stop();
 
         if (solvedAnimationRoutine != null)
         {
@@ -47,13 +56,28 @@ public sealed class ToysManager : MonoBehaviour
         }
 
         solved = true;
+        PlaySolvedSound();
+        PlaySolvedAnimation();
+    }
 
-        if (!string.IsNullOrEmpty(solvedSoundId))
+    private void PlaySolvedSound()
+    {
+        if (string.IsNullOrEmpty(solvedSoundId))
         {
-            SoundManager.PlaySound(solvedSoundId);
+            return;
         }
 
-        PlaySolvedAnimation();
+        SoundLibrary library = SoundManager.HasInstance ? SoundManager.Instance.Library : null;
+        if (library == null || !library.TryGetEntry(solvedSoundId, SoundType.Sound, out SoundEntry entry) || entry.Clip == null)
+        {
+            return;
+        }
+
+        toysSoundSource.clip = entry.Clip;
+        toysSoundSource.volume = entry.Volume;
+        toysSoundSource.pitch = entry.Pitch;
+        toysSoundSource.loop = entry.Loop && solvedAnimationPlayer != null;
+        toysSoundSource.Play();
     }
 
     private void PlaySolvedAnimation()
@@ -97,6 +121,7 @@ public sealed class ToysManager : MonoBehaviour
 
         solvedAnimationPlayer.UpdateImmediately(duration);
         solvedAnimationRoutine = null;
+        toysSoundSource.Stop();
     }
 
     private void OnValidate()

@@ -50,6 +50,7 @@ public class PauseMenu : MonoBehaviour
 
         pauseMenu.SetActive(true);
         Time.timeScale = 0f;
+        AudioListener.pause = true;
 
         if (playerController != null)
             playerController.enabled = false;
@@ -71,6 +72,7 @@ public class PauseMenu : MonoBehaviour
 
         pauseMenu.SetActive(false);
         Time.timeScale = 1f;
+        AudioListener.pause = false;
 
         if (playerController != null)
             playerController.enabled = true;
@@ -114,6 +116,7 @@ public class PauseMenu : MonoBehaviour
 
         pauseMenu.SetActive(false);
         Time.timeScale = 1f;
+        AudioListener.pause = false;
 
         if (playerController != null)
         {

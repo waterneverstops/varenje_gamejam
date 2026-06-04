@@ -16,7 +16,7 @@ MonoBehaviour:
   - id: Cho-choo
     type: 0
     clip: {fileID: 8300000, guid: b52ab7a1b4388cb4d8c71585c65bd099, type: 3}
-    volume: 1
+    volume: 0.725
     pitch: 1
     loop: 1
   - id: Lamp_Switch
@@ -75,7 +75,7 @@ MonoBehaviour:
     loop: 0
   - id: Turning_Page_Open_Book
     type: 0
-    clip: {fileID: 8300000, guid: 77355cc8401613d4a9d9bce77586b055, type: 3}
+    clip: {fileID: 8300000, guid: 4a7e305e871434b4c9fa078fc155d4a3, type: 3}
     volume: 0.725
     pitch: 1
     loop: 0
@@ -88,7 +88,7 @@ MonoBehaviour:
   - id: Rain
     type: 1
     clip: {fileID: 8300000, guid: e40179763be04e645b68997d5d2a36da, type: 3}
-    volume: 0.725
+    volume: 0.06
     pitch: 1
     loop: 1
   - id: MagicUI
@@ -99,13 +99,13 @@ MonoBehaviour:
     loop: 0
   - id: UI
     type: 0
-    clip: {fileID: 8300000, guid: 319a4702a6edf914ebfa647497ff85d0, type: 3}
-    volume: 0.725
+    clip: {fileID: 8300000, guid: 9150296b41da15a48b0eb02d8f7b1255, type: 3}
+    volume: 0.4
     pitch: 1
     loop: 0
   - id: MainTheme
     type: 1
     clip: {fileID: 8300000, guid: 06798b6164038054e9bd4c955b8459af, type: 3}
-    volume: 0.725
+    volume: 0.1
     pitch: 1
     loop: 1

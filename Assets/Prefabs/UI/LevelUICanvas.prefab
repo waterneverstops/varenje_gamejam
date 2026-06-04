@@ -6564,7 +6564,6 @@ GameObject:
   - component: {fileID: 8108364157380419092}
   - component: {fileID: 3681417535582888149}
   - component: {fileID: 1329249880689613052}
-  - component: {fileID: 1888386798380415121}
   m_Layer: 5
   m_Name: EnterButton
   m_TagString: Untagged
@@ -6690,19 +6689,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HoverButton
   buttonLayer: {fileID: 5178779806522724494}
   hoverLayer: {fileID: 3614725003285581876}
---- !u!114 &1888386798380415121
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3296347910170897237}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec7998912f1ee1e44bc7e0a72ef6fa44, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::UiButtonSoundPlayer
-  soundId: UI
 --- !u!1 &3333932916436777073
 GameObject:
   m_ObjectHideFlags: 0
