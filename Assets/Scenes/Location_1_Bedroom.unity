@@ -393,15 +393,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8855529433937265812, guid: 25092f73c05c02d48a195e758cb16b4e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.0077
+      value: 0.005
       objectReference: {fileID: 0}
     - target: {fileID: 8855529433937265812, guid: 25092f73c05c02d48a195e758cb16b4e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.0004
+      value: 0.044
       objectReference: {fileID: 0}
     - target: {fileID: 8855529433937265812, guid: 25092f73c05c02d48a195e758cb16b4e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.0001
+      value: -0.006
+      objectReference: {fileID: 0}
+    - target: {fileID: 8855529433937265812, guid: 25092f73c05c02d48a195e758cb16b4e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99740314
+      objectReference: {fileID: 0}
+    - target: {fileID: 8855529433937265812, guid: 25092f73c05c02d48a195e758cb16b4e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.071904436
+      objectReference: {fileID: 0}
+    - target: {fileID: 8855529433937265812, guid: 25092f73c05c02d48a195e758cb16b4e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.0040705204
+      objectReference: {fileID: 0}
+    - target: {fileID: 8855529433937265812, guid: 25092f73c05c02d48a195e758cb16b4e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.0004645735
+      objectReference: {fileID: 0}
+    - target: {fileID: 8855529433937265812, guid: 25092f73c05c02d48a195e758cb16b4e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -8.246
+      objectReference: {fileID: 0}
+    - target: {fileID: 8855529433937265812, guid: 25092f73c05c02d48a195e758cb16b4e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -0.474
+      objectReference: {fileID: 0}
+    - target: {fileID: 8855529433937265812, guid: 25092f73c05c02d48a195e758cb16b4e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0.088
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6114541604519185330, guid: 25092f73c05c02d48a195e758cb16b4e, type: 3}
@@ -1705,7 +1733,7 @@ MonoBehaviour:
   requiredViewPosition: {fileID: 1836585044}
   lookTarget: {fileID: 848348199}
   viewDirection: {fileID: 0}
-  playerLight: {fileID: 0}
+  playerLight: {fileID: 1193953152}
   enterPositionRadius: 0.74
   exitPositionRadius: 1.05
   ignoreHeight: 1

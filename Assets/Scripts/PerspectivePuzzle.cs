@@ -9,6 +9,9 @@ public sealed class PerspectivePuzzle : MonoBehaviour
     [SerializeField] private Transform lookTarget;
     [SerializeField] private Transform viewDirection;
 
+    [Header("Player Light")]
+    [SerializeField] private PlayerLight playerLight;
+
     [Header("Position")]
     [SerializeField, Min(0.05f)] private float enterPositionRadius = 0.8f;
     [SerializeField, Min(0.05f)] private float exitPositionRadius = 1.05f;
@@ -65,6 +68,14 @@ public sealed class PerspectivePuzzle : MonoBehaviour
         if (requirePlayerInputAllowed && PlayerStateManager.HasInstance &&
             !PlayerStateManager.Instance.CanProcessPlayerInput)
         {
+            DrainProgress(Time.deltaTime);
+            return;
+        }
+
+        if (!IsPlayerLightOff())
+        {
+            positionMatched = false;
+            angleMatched = false;
             DrainProgress(Time.deltaTime);
             return;
         }
@@ -162,6 +173,11 @@ public sealed class PerspectivePuzzle : MonoBehaviour
     private void DrainProgress(float deltaTime)
     {
         holdProgress = Mathf.Max(0f, holdProgress - progressDrainSpeed * deltaTime);
+    }
+
+    private bool IsPlayerLightOff()
+    {
+        return playerLight != null && !playerLight.IsLightOn;
     }
 
     private static void SetObjectsActive(GameObject[] targets, bool active)
