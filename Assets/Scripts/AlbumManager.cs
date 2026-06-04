@@ -92,6 +92,17 @@ public sealed class AlbumManager : MonoBehaviour
         return !string.IsNullOrWhiteSpace(id) && _collectedIds.Contains(id);
     }
 
+    public void ClearCollectedIds()
+    {
+        _collectedIds.Clear();
+        collectionFlashTween?.Kill();
+
+        if (collectionFlashGroup != null)
+        {
+            collectionFlashGroup.alpha = 0f;
+        }
+    }
+
     private void PlayCollectionFlash()
     {
         if (collectionFlashGroup == null)

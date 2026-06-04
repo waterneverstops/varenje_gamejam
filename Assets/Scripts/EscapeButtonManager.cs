@@ -59,6 +59,11 @@ public sealed class EscapeButtonManager : SingleBehaviour<EscapeButtonManager>
         }
     }
 
+    public void ClearWindows()
+    {
+        handlers.Clear();
+    }
+
     public bool IsWindowRegistered(object owner)
     {
         if (owner == null)

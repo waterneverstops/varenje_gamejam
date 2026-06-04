@@ -44,6 +44,7 @@ public class InputService : SingleBehaviour<InputService>
     {
         Init();
         GameControls.Player.AddCallbacks(subscriber);
+        RefreshPlayerInputState();
     }
 
     public void UnsubscribePlayer(GameInputs.IPlayerActions subscriber)
@@ -63,6 +64,12 @@ public class InputService : SingleBehaviour<InputService>
     public void SubscribeGrab(GameInputs.IPlayerActions subscriber) => SubscribePlayer(subscriber);
 
     public void UnsubscribeGrab(GameInputs.IPlayerActions subscriber) => UnsubscribePlayer(subscriber);
+
+    public void RefreshPlayerInputState()
+    {
+        Init();
+        ApplyPlayerInputState(PlayerStateManager.Instance.CanProcessPlayerInput);
+    }
 
     private void ApplyPlayerInputState(bool canProcessPlayerInput)
     {

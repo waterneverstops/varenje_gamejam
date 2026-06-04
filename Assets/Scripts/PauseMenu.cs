@@ -8,6 +8,11 @@ public class PauseMenu : MonoBehaviour
 
     private bool isPaused = false;
 
+    private void Awake()
+    {
+        ResetAlbumProgress();
+    }
+
     private void Start()
     {
         pauseMenu.SetActive(false);
@@ -76,17 +81,80 @@ public class PauseMenu : MonoBehaviour
 
     public void BackToMenu()
     {
+        ResetPauseState(true);
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void RestartLevel()
+    {
+        ResetPauseState(false);
+        SceneManager.sceneLoaded -= ResetInputStateAfterSceneLoad;
+        SceneManager.sceneLoaded += ResetInputStateAfterSceneLoad;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    private void ResetPauseState(bool showCursor)
+    {
         isPaused = false;
-        EscapeButtonManager.Instance.UnregisterWindow(this);
-        PlayerStateManager.Instance.UnblockPlayerInput(this);
+
+        if (EscapeButtonManager.HasInstance)
+        {
+            EscapeButtonManager.Instance.ClearWindows();
+        }
+
+        if (PlayerStateManager.HasInstance)
+        {
+            PlayerStateManager.Instance.ClearInputBlockers();
+        }
+
+        if (InputService.HasInstance)
+        {
+            InputService.Instance.RefreshPlayerInputState();
+        }
+
+        pauseMenu.SetActive(false);
         Time.timeScale = 1f;
 
         if (playerController != null)
+        {
             playerController.enabled = true;
+        }
 
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = showCursor;
+        Cursor.lockState = showCursor ? CursorLockMode.None : CursorLockMode.Locked;
+    }
 
-        SceneManager.LoadScene("MainMenu");
+    private static void ResetInputStateAfterSceneLoad(Scene scene, LoadSceneMode mode)
+    {
+        SceneManager.sceneLoaded -= ResetInputStateAfterSceneLoad;
+        Time.timeScale = 1f;
+
+        if (EscapeButtonManager.HasInstance)
+        {
+            EscapeButtonManager.Instance.ClearWindows();
+        }
+
+        if (PlayerStateManager.HasInstance)
+        {
+            PlayerStateManager.Instance.ClearInputBlockers();
+        }
+
+        if (InputService.HasInstance)
+        {
+            InputService.Instance.RefreshPlayerInputState();
+        }
+    }
+
+    private static void ResetAlbumProgress()
+    {
+        if (PlayerStateManager.HasInstance)
+        {
+            PlayerStateManager.Instance.ResetAlbum();
+        }
+
+        if (AlbumManager.HasInstance)
+        {
+            AlbumManager.Instance.ClearCollectedIds();
+        }
     }
 }

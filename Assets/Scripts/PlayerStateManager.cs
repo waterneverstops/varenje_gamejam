@@ -43,6 +43,17 @@ public sealed class PlayerStateManager : SingleBehaviour<PlayerStateManager>
         return true;
     }
 
+    public void ResetAlbum()
+    {
+        if (!hasAlbum)
+        {
+            return;
+        }
+
+        hasAlbum = false;
+        AlbumCollected?.Invoke();
+    }
+
     public void BlockPlayerInput(object owner)
     {
         if (owner == null || playerInputBlockers.Contains(owner))
@@ -69,6 +80,12 @@ public sealed class PlayerStateManager : SingleBehaviour<PlayerStateManager>
             }
         }
 
+        NotifyIfInputStateChanged();
+    }
+
+    public void ClearInputBlockers()
+    {
+        playerInputBlockers.Clear();
         NotifyIfInputStateChanged();
     }
 
