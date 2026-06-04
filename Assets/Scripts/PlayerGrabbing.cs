@@ -20,7 +20,7 @@ public sealed class PlayerGrabbing : MonoBehaviour, GameInputs.IPlayerActions
 
     [Header("Grab")]
     [SerializeField, Range(4f, 50f)] private float grabSpeed = 7f;
-    [SerializeField, Range(4f, 25f)] private float grabMaxDistance = 10f;
+    [SerializeField, Range(0.1f, 25f)] private float grabMaxDistance = 10f;
     [SerializeField, Range(10f, 50f)] private float throwImpulse = 25f;
     [SerializeField] private bool enableThrowAction;
     [SerializeField] private LayerMask collisionMask = ~0;

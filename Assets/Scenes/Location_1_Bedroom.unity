@@ -10313,6 +10313,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4812511089135493968, guid: 05db4ded0e9e23346b4723af48b21980, type: 3}
+      propertyPath: grabMaxDistance
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4812511089135493968, guid: 05db4ded0e9e23346b4723af48b21980, type: 3}
       propertyPath: draggableHoverHint
       value: 
       objectReference: {fileID: 1678653211}
