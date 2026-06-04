@@ -7329,6 +7329,7 @@ MonoBehaviour:
   flashFadeInEase: 3
   flashFadeOutEase: 2
   useUnscaledFlashTime: 1
+  collectSoundId: Pen_Writing_Book
 --- !u!1 &470984321
 GameObject:
   m_ObjectHideFlags: 0
@@ -7888,7 +7889,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 14868
   m_UseColorTemperature: 1
-  m_BoundingSphereOverride: {x: 4.5911e-41, y: 0, z: 0, w: 5.531596e-15}
+  m_BoundingSphereOverride: {x: 7.9810225e-10, y: 1.653169e-39, z: 2.4638408e-35, w: 1.83733e-40}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
@@ -8557,6 +8558,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: f42e13abbf819154ab585dc04eea07dd, type: 2}
+    - target: {fileID: -7044669887167428954, guid: 62d9fe89d7ee8b740969aa93c58426ff, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.021
+      objectReference: {fileID: 0}
     - target: {fileID: -6993153867488530832, guid: 62d9fe89d7ee8b740969aa93c58426ff, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -8653,6 +8658,10 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: -4415979018997670118, guid: 62d9fe89d7ee8b740969aa93c58426ff, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.0676277
+      objectReference: {fileID: 0}
     - target: {fileID: -4292527264221828328, guid: 62d9fe89d7ee8b740969aa93c58426ff, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -8681,6 +8690,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 48f313f207e398f4f8c4d955b50b8497, type: 2}
+    - target: {fileID: -3091292673655748936, guid: 62d9fe89d7ee8b740969aa93c58426ff, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.196
+      objectReference: {fileID: 0}
     - target: {fileID: -2919599033691884847, guid: 62d9fe89d7ee8b740969aa93c58426ff, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -8893,6 +8906,10 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: 2176021976826990049, guid: 62d9fe89d7ee8b740969aa93c58426ff, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.1150386
+      objectReference: {fileID: 0}
     - target: {fileID: 2347709022789875872, guid: 62d9fe89d7ee8b740969aa93c58426ff, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -9025,6 +9042,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[2]'
       value: 
       objectReference: {fileID: 2100000, guid: 75c3ff860f53efe45b6064cd314e3736, type: 2}
+    - target: {fileID: 6581398321892413620, guid: 62d9fe89d7ee8b740969aa93c58426ff, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.1650195
+      objectReference: {fileID: 0}
     - target: {fileID: 6653617380589836260, guid: 62d9fe89d7ee8b740969aa93c58426ff, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -9060,6 +9081,10 @@ PrefabInstance:
     - target: {fileID: 7108286696472243458, guid: 62d9fe89d7ee8b740969aa93c58426ff, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 7294628276862148030, guid: 62d9fe89d7ee8b740969aa93c58426ff, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.2284904
       objectReference: {fileID: 0}
     - target: {fileID: 7437255200021623124, guid: 62d9fe89d7ee8b740969aa93c58426ff, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -11249,7 +11274,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 4573
   m_UseColorTemperature: 1
-  m_BoundingSphereOverride: {x: 4.5911e-41, y: 0, z: 0, w: 5.531596e-15}
+  m_BoundingSphereOverride: {x: 3.4331227e-26, y: 1.83733e-40, z: 2.7509e-41, w: 0}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
