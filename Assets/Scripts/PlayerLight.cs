@@ -15,6 +15,10 @@ public sealed class PlayerLight : MonoBehaviour, GameInputs.IPlayerActions
     [Header("Album IDs")]
     [SerializeField] private string lightOffAlbumId = "light";
 
+    [Header("Sound IDs")]
+    [SerializeField, SoundId(SoundType.Sound)] private string switchSoundId = "Lamp_Switch";
+    [SerializeField, SoundId(SoundType.Sound)] private string lightOnSoundId = "lamp_light";
+
     [Header("Charge Color")]
     [SerializeField] private Color fullChargeColor = Color.white;
     [SerializeField] private Color emptyChargeColor = new Color(1f, 0.45f, 0f);
@@ -95,6 +99,8 @@ public sealed class PlayerLight : MonoBehaviour, GameInputs.IPlayerActions
             return;
         }
 
+        PlaySwitchSound();
+
         if (targetLight.enabled || startupRoutine != null)
         {
             StopStartupRoutine();
@@ -104,6 +110,14 @@ public sealed class PlayerLight : MonoBehaviour, GameInputs.IPlayerActions
         }
 
         TryStartLight();
+    }
+
+    private void PlaySwitchSound()
+    {
+        if (!string.IsNullOrEmpty(switchSoundId))
+        {
+            SoundManager.PlaySound(switchSoundId);
+        }
     }
 
     private void TryStartLight()
@@ -146,6 +160,11 @@ public sealed class PlayerLight : MonoBehaviour, GameInputs.IPlayerActions
     {
         StopFlicker();
         targetLight.enabled = true;
+
+        if (!string.IsNullOrEmpty(lightOnSoundId))
+        {
+            SoundManager.PlaySound(lightOnSoundId);
+        }
 
         float elapsed = 0f;
         while (elapsed < startupDelay)

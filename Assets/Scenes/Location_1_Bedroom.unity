@@ -7309,6 +7309,7 @@ MonoBehaviour:
   activateAnimationObjectOnSolved: 1
   rewindAnimationOnSolved: 1
   animationPlaybackSpeed: 1
+  solvedSoundId: Cho-choo
 --- !u!114 &467130071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10240,6 +10241,10 @@ PrefabInstance:
       objectReference: {fileID: 1723802422}
     - target: {fileID: 6998550588068157674, guid: 05db4ded0e9e23346b4723af48b21980, type: 3}
       propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 6998550588068157674, guid: 05db4ded0e9e23346b4723af48b21980, type: 3}
+      propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -15095,6 +15100,10 @@ PrefabInstance:
     - target: {fileID: 7166671661914496857, guid: dd4155357055fbe418a77a000cb85284, type: 3}
       propertyPath: m_Color.a
       value: 0.011764706
+      objectReference: {fileID: 0}
+    - target: {fileID: 7360936465092111213, guid: dd4155357055fbe418a77a000cb85284, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7479289380744420578, guid: dd4155357055fbe418a77a000cb85284, type: 3}
       propertyPath: albumHints.Array.size

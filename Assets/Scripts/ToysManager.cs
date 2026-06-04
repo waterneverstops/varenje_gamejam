@@ -11,6 +11,9 @@ public sealed class ToysManager : MonoBehaviour
     [SerializeField] private bool rewindAnimationOnSolved = true;
     [SerializeField, Min(0.01f)] private float animationPlaybackSpeed = 1f;
 
+    [Header("Sound")]
+    [SerializeField, SoundId(SoundType.Sound)] private string solvedSoundId = "Cho-choo";
+
     private bool solved;
     private Coroutine solvedAnimationRoutine;
 
@@ -44,6 +47,12 @@ public sealed class ToysManager : MonoBehaviour
         }
 
         solved = true;
+
+        if (!string.IsNullOrEmpty(solvedSoundId))
+        {
+            SoundManager.PlaySound(solvedSoundId);
+        }
+
         PlaySolvedAnimation();
     }
 

@@ -18,6 +18,9 @@ public sealed class LockWindowController : MonoBehaviour
     [SerializeField] private Button enterButton;
     [SerializeField] private Button exitButton;
 
+    [Header("Sound")]
+    [SerializeField, SoundId(SoundType.Sound)] private string openSoundId = "Lock_Open";
+
     private Action solvedCallback;
     private Action closedCallback;
     private bool isOpen;
@@ -92,6 +95,11 @@ public sealed class LockWindowController : MonoBehaviour
             thirdReel.CurrentDigit != thirdDigit)
         {
             return;
+        }
+
+        if (!string.IsNullOrEmpty(openSoundId))
+        {
+            SoundManager.PlaySound(openSoundId);
         }
 
         CloseWindow(true);

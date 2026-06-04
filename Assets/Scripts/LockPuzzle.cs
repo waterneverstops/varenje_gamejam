@@ -14,6 +14,7 @@ public sealed class LockPuzzle : Interactable
 
     public override bool CanInteract => base.CanInteract && !isOpen && !isSolved;
     public override InteractableHoverHintType HoverHintType => InteractableHoverHintType.LockPuzzle;
+    public bool IsSolved => isSolved;
 
     private void Reset()
     {

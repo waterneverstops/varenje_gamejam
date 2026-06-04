@@ -18,10 +18,16 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: b52ab7a1b4388cb4d8c71585c65bd099, type: 3}
     volume: 1
     pitch: 1
-    loop: 0
+    loop: 1
   - id: Lamp_Switch
     type: 0
     clip: {fileID: 8300000, guid: 9756340ab5578874a84c894c99a18520, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - id: lamp_light
+    type: 0
+    clip: {fileID: 8300000, guid: b9172efbf93ab7d4bbd6b6d1605c9232, type: 3}
     volume: 1
     pitch: 1
     loop: 0
@@ -79,3 +85,27 @@ MonoBehaviour:
     volume: 1
     pitch: 1
     loop: 0
+  - id: Rain
+    type: 1
+    clip: {fileID: 8300000, guid: e40179763be04e645b68997d5d2a36da, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
+  - id: MagicUI
+    type: 0
+    clip: {fileID: 8300000, guid: c6ef1e5913e1f2f4eac1eea370444671, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - id: UI
+    type: 0
+    clip: {fileID: 8300000, guid: 319a4702a6edf914ebfa647497ff85d0, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - id: MainTheme
+    type: 1
+    clip: {fileID: 8300000, guid: 06798b6164038054e9bd4c955b8459af, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1

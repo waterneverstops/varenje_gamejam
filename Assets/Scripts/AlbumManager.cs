@@ -15,6 +15,9 @@ public sealed class AlbumManager : MonoBehaviour
     [SerializeField] private Ease flashFadeOutEase = Ease.InSine;
     [SerializeField] private bool useUnscaledFlashTime = true;
 
+    [Header("Sound")]
+    [SerializeField, SoundId(SoundType.Sound)] private string collectSoundId = "Pen_Writing_Book";
+
     private readonly HashSet<string> _collectedIds = new HashSet<string>();
     private Tween collectionFlashTween;
 
@@ -81,6 +84,10 @@ public sealed class AlbumManager : MonoBehaviour
         if (isAdded)
         {
             PlayCollectionFlash();
+            if (!string.IsNullOrEmpty(collectSoundId))
+            {
+                SoundManager.PlaySound(collectSoundId);
+            }
             IdCollected?.Invoke(id);
         }
 
