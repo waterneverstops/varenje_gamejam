@@ -5,7 +5,11 @@
       "Bash(python3 -c ' *)",
       "Bash(python3 *)",
       "Bash(git *)",
-      "Bash(powershell *)"
+      "Bash(powershell *)",
+      "Bash(grep -B5 -A30 \"EditorClassIdentifier: Assembly-CSharp::PlayerLight$\")",
+      "Bash(Get-ChildItem -Path \"D:\\\\Un\\\\proj\\\\varenje_gamejam\\\\Assets\" -Recurse -Filter \"*.cs\")",
+      "Bash(Select-Object -ExpandProperty Name)",
+      "Bash(Sort-Object)"
     ]
   }
 }

@@ -3,6 +3,7 @@ using UnityEngine;
 public sealed class AlbumVictoryController : MonoBehaviour
 {
     [SerializeField] private string[] requiredAlbumIds = { "first_puzzle", "second_puzzle", "third_puzzle" };
+    [SerializeField] private string finalInscriptionId = "Final";
     [SerializeField] private GameObject victoryWindow;
     [SerializeField] private bool pauseTimeOnVictory = true;
     [SerializeField] private bool showCursorOnVictory = true;
@@ -20,7 +21,7 @@ public sealed class AlbumVictoryController : MonoBehaviour
     private void OnEnable()
     {
         AlbumManager.Instance.IdCollected += OnAlbumIdCollected;
-        CheckVictory();
+        CheckFinalInscription();
     }
 
     private void OnDisable()
@@ -53,10 +54,20 @@ public sealed class AlbumVictoryController : MonoBehaviour
 
     private void OnAlbumIdCollected(string id)
     {
-        CheckVictory();
+        CheckFinalInscription();
     }
 
-    private void CheckVictory()
+    private void CheckFinalInscription()
+    {
+        if (string.IsNullOrEmpty(finalInscriptionId) || !HasAllRequiredAlbumIds())
+        {
+            return;
+        }
+
+        AlbumManager.Instance.CollectId(finalInscriptionId);
+    }
+
+    public void CheckVictory()
     {
         if (victoryShown || !HasAllRequiredAlbumIds())
         {
