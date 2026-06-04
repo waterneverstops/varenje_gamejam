@@ -33,7 +33,7 @@ public sealed class UiButtonSoundPlayer : MonoBehaviour
     {
         if (!string.IsNullOrEmpty(soundId))
         {
-            SoundManager.PlaySound(soundId);
+            SoundManager.PlayUISound(soundId);
         }
     }
 }

@@ -8,6 +8,7 @@ public sealed class SoundManager : SingleBehaviour<SoundManager>
     [SerializeField] private SoundLibrary library;
     [SerializeField] private AudioSource soundSource;
     [SerializeField] private AudioSource musicSource;
+    [SerializeField] private AudioSource uiSoundSource;
     [Range(0f, 1f)] [SerializeField] private float soundVolume = 1f;
     [Range(0f, 1f)] [SerializeField] private float musicVolume = 1f;
 
@@ -24,6 +25,11 @@ public sealed class SoundManager : SingleBehaviour<SoundManager>
     public static bool PlaySound(string id)
     {
         return Instance.PlaySoundInternal(id);
+    }
+
+    public static bool PlayUISound(string id)
+    {
+        return Instance.PlayUISoundInternal(id);
     }
 
     public static bool PlayMusic(string id, bool restartIfSame = false)
@@ -90,6 +96,24 @@ public sealed class SoundManager : SingleBehaviour<SoundManager>
 
         soundSource.pitch = entry.Pitch;
         soundSource.PlayOneShot(entry.Clip, soundVolume * entry.Volume);
+        return true;
+    }
+
+    private bool PlayUISoundInternal(string id)
+    {
+        if (!TryGetEntry(id, SoundType.Sound, out SoundEntry entry))
+        {
+            return false;
+        }
+
+        if (entry.Clip == null)
+        {
+            Debug.LogWarning($"Sound '{id}' has no clip.", this);
+            return false;
+        }
+
+        uiSoundSource.pitch = entry.Pitch;
+        uiSoundSource.PlayOneShot(entry.Clip, soundVolume * entry.Volume);
         return true;
     }
 
@@ -166,6 +190,13 @@ public sealed class SoundManager : SingleBehaviour<SoundManager>
         if (musicSource == null)
         {
             musicSource = CreateAudioSource("Music Source", true);
+            musicSource.ignoreListenerPause = true;
+        }
+
+        if (uiSoundSource == null)
+        {
+            uiSoundSource = CreateAudioSource("UI Sound Source", false);
+            uiSoundSource.ignoreListenerPause = true;
         }
     }
 
