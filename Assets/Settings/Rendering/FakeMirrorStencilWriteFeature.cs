@@ -19,6 +19,7 @@ public sealed class FakeMirrorStencilWriteFeature : ScriptableRendererFeature
     }
 
     [SerializeField] private Settings settings = new Settings();
+    [SerializeField] private Shader depthClearShader;
 
     private StencilDepthClearPass depthClearPass;
     private RenderObjectsPass pass;
@@ -31,7 +32,9 @@ public sealed class FakeMirrorStencilWriteFeature : ScriptableRendererFeature
         if (settings.renderPassEvent < RenderPassEvent.BeforeRenderingPrePasses)
             settings.renderPassEvent = RenderPassEvent.BeforeRenderingPrePasses;
 
-        Shader shader = Shader.Find("Hidden/Fake Mirror/Stencil Depth Clear");
+        Shader shader = depthClearShader != null
+            ? depthClearShader
+            : Shader.Find("Hidden/Fake Mirror/Stencil Depth Clear");
         if (shader != null)
         {
             if (depthClearMaterial == null || depthClearMaterial.shader != shader)

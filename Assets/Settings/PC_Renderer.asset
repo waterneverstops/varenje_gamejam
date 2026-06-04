@@ -81,6 +81,7 @@ MonoBehaviour:
     depthTest: 4
     depthWrite: 1
     clearDepthInsideStencil: 1
+  depthClearShader: {fileID: 4800000, guid: 24d9f72a1b54d734d8045960b81f47ea, type: 3}
 --- !u!114 &4649793481897840250
 MonoBehaviour:
   m_ObjectHideFlags: 0
