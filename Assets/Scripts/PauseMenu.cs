@@ -83,12 +83,14 @@ public class PauseMenu : MonoBehaviour
 
     public void BackToMenu()
     {
+        ResetAlbumProgress();
         ResetPauseState(true);
         SceneManager.LoadScene("MainMenu");
     }
 
     public void RestartLevel()
     {
+        ResetAlbumProgress();
         ResetPauseState(false);
         SceneManager.sceneLoaded -= ResetInputStateAfterSceneLoad;
         SceneManager.sceneLoaded += ResetInputStateAfterSceneLoad;
